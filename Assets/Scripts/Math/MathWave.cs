@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem; // N'oublie pas ça !
+using UnityEngine.InputSystem;
 
 public class MathWave : MonoBehaviour
 {
     [Header("References")] 
     [SerializeField] private MathLine linePrefab;
     [SerializeField] private TextMeshProUGUI functionText;
-    [SerializeField] private AudioAmplitude audioAmplitude;
 
     [Header("Visual Settings")] 
     [SerializeField] private int numPoints = 100;
@@ -35,13 +34,22 @@ public class MathWave : MonoBehaviour
     private readonly List<MathLine> _activeLines = new();
     private readonly Queue<MathLine> _linePool = new();
     private readonly List<Vector2> _currentColliderPoints = new();
+    
+    private AudioAmplitude _audioAmplitude;
+    private Camera _mainCamera;
 
     private string _currentFormula;
     private bool _hasBase;
 
+    private void Start()
+    {
+        _audioAmplitude = AudioAmplitude.Instance;
+        _mainCamera = Camera.main;
+    }
+
     private void Update()
     {
-        float audioAmp = audioAmplitude.Amplitude;
+        float audioAmp = _audioAmplitude.Amplitude;
         if (audioAmp > 0.01f) TimeValue += speed * audioAmp * Time.deltaTime;
 
         UpdateWave();
@@ -53,17 +61,13 @@ public class MathWave : MonoBehaviour
 
         Vector3 playerPos = transform.position;
         
-        // --- 1. CALCUL DE LA DIRECTION (VERS LA SOURIS) ---
         Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-        mouseWorldPos.z = 0f; // On reste en 2D
-
-        // Direction principale (l'axe X de ta fonction)
+        Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(mouseScreenPos);
+        mouseWorldPos.z = 0f;
+        
         Vector3 forwardDir = (mouseWorldPos - playerPos).normalized;
         
-        // Direction perpendiculaire (l'axe Y de ta fonction) = (-y, x)
         Vector3 upDir = new Vector3(-forwardDir.y, forwardDir.x, 0f);
-        // --------------------------------------------------
 
         float maxJump = 10f;
         float prevY = 0f;
@@ -92,7 +96,7 @@ public class MathWave : MonoBehaviour
                 hasValue = true;
             }
 
-            y *= 1f + audioAmplitude.Amplitude * audioAmplitudeStrength;
+            y *= 1f + _audioAmplitude.Amplitude * audioAmplitudeStrength;
             
             float blendFactor = Mathf.Clamp01(visualX / startTransitionDistance);
             blendFactor = Mathf.SmoothStep(0f, 1f, blendFactor);
@@ -155,8 +159,6 @@ public class MathWave : MonoBehaviour
         CleanupUnusedLines(activeLineIndex);
     }
     
-    // ... (Le reste : GetLineOrReuse, CleanupUnusedLines, AddNode, Clear, Getters... INCHANGÉ) ...
-    
     private MathLine GetLineOrReuse(int index)
     {
         MathLine lineObj;
@@ -167,8 +169,7 @@ public class MathWave : MonoBehaviour
             lineObj.gameObject.SetActive(true);
         }
         else lineObj = Instantiate(linePrefab, transform);
-
-        // Important : On remet la position locale à 0
+        
         lineObj.transform.localPosition = Vector3.zero;
         lineObj.transform.localRotation = Quaternion.identity;
 

@@ -8,9 +8,13 @@ public class MathProjectile : MonoBehaviour
     [SerializeField] private float minSpeed = 0.5f; 
     [SerializeField] private float lifeTime = 5f;
     [SerializeField] private float startTransitionDistance = 3f;
+    [SerializeField] private float maxJumpDistance = 5f; 
 
     [Header("Audio")]
-    [SerializeField] private float audioStrength = 5f; // C'est ici maintenant !
+    [SerializeField] private float audioStrength = 5f;
+    [SerializeField] private float audioScaleStrength = 1f;
+
+    private TrailRenderer _trailRenderer;
 
     private Vector3 _startPosition;
     private Vector3 _direction;
@@ -23,7 +27,14 @@ public class MathProjectile : MonoBehaviour
     private float _mathMaxX;
     private float _beamLength;
 
-    // On a retiré "float audioStrength" des arguments
+    private Vector3 _initialScale;
+
+    private void Awake()
+    {
+        _trailRenderer = GetComponent<TrailRenderer>();
+        _initialScale = transform.localScale;
+    }
+
     public void Init(Vector3 direction, List<MathNode> nodes, float minX, float maxX, float length)
     {
         _direction = direction.normalized;
@@ -42,12 +53,16 @@ public class MathProjectile : MonoBehaviour
         
         if (AudioAmplitude.Instance)
         {
-            // On utilise la variable locale audioStrength définie dans l'inspecteur du prefab
-            currentSpeed += baseSpeed * AudioAmplitude.Instance.Amplitude * audioStrength;
+            float amp = AudioAmplitude.Instance.Amplitude;
+            currentSpeed += baseSpeed * amp * audioStrength;
+
+            float scaleMultiplier = 1f + (amp * audioScaleStrength);
+            transform.localScale = _initialScale * scaleMultiplier;
         }
         else
         {
             currentSpeed = baseSpeed;
+            transform.localScale = _initialScale;
         }
 
         _distanceTraveled += currentSpeed * Time.deltaTime;
@@ -70,7 +85,20 @@ public class MathProjectile : MonoBehaviour
         Vector3 straightPos = _startPosition + (_direction * _distanceTraveled);
         Vector3 offset = _perpendicularDir * mathY;
         
-        transform.position = straightPos + offset;
+        // --- DETECTION DU SAUT ---
+        Vector3 targetPosition = straightPos + offset;
+
+        // On calcule la distance entre là où on est et là où on va
+        float dist = Vector3.Distance(transform.position, targetPosition);
+
+        // Si le saut est trop grand (et que ce n'est pas la première frame où distanceTraveled est petite)
+        if (_trailRenderer && dist > maxJumpDistance && _distanceTraveled > 0.1f)
+        {
+            _trailRenderer.Clear(); // Coupe le fil pour éviter la ligne traversante
+        }
+        
+        transform.position = targetPosition;
+        // -------------------------
         
         float nextDist = _distanceTraveled + (currentSpeed * 0.05f);
         float nextT = nextDist / _beamLength;
