@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem; // N'oublie pas ça !
 
 public class MathWave : MonoBehaviour
 {
@@ -51,6 +52,19 @@ public class MathWave : MonoBehaviour
         if (_nodes.Count == 0) return;
 
         Vector3 playerPos = transform.position;
+        
+        // --- 1. CALCUL DE LA DIRECTION (VERS LA SOURIS) ---
+        Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        mouseWorldPos.z = 0f; // On reste en 2D
+
+        // Direction principale (l'axe X de ta fonction)
+        Vector3 forwardDir = (mouseWorldPos - playerPos).normalized;
+        
+        // Direction perpendiculaire (l'axe Y de ta fonction) = (-y, x)
+        Vector3 upDir = new Vector3(-forwardDir.y, forwardDir.x, 0f);
+        // --------------------------------------------------
+
         float maxJump = 10f;
         float prevY = 0f;
 
@@ -110,8 +124,17 @@ public class MathWave : MonoBehaviour
             {
                 currentLineObj.Line.positionCount = pointIndex + 1;
                 
-                currentLineObj.Line.SetPosition(pointIndex, playerPos + new Vector3(visualX, y, 0));
-                _currentColliderPoints.Add(new Vector2(visualX, y));
+                // --- 2. APPLICATION DE LA DIRECTION ---
+                // Position = Player + (Avancer de VisualX) + (Monter de Y sur le coté)
+                Vector3 finalPos = playerPos + (forwardDir * visualX) + (upDir * y);
+                
+                currentLineObj.Line.SetPosition(pointIndex, finalPos);
+                
+                // Pour le collider, il faut transformer le point WORLD en point LOCAL
+                // car le collider est enfant du joueur (si MathWave est sur le joueur).
+                // L'inverse de "Player + ..." c'est "transform.InverseTransformPoint"
+                _currentColliderPoints.Add(transform.InverseTransformPoint(finalPos));
+                // --------------------------------------
                 
                 pointIndex++;
                 prevY = y;
@@ -132,6 +155,8 @@ public class MathWave : MonoBehaviour
         CleanupUnusedLines(activeLineIndex);
     }
     
+    // ... (Le reste : GetLineOrReuse, CleanupUnusedLines, AddNode, Clear, Getters... INCHANGÉ) ...
+    
     private MathLine GetLineOrReuse(int index)
     {
         MathLine lineObj;
@@ -143,6 +168,7 @@ public class MathWave : MonoBehaviour
         }
         else lineObj = Instantiate(linePrefab, transform);
 
+        // Important : On remet la position locale à 0
         lineObj.transform.localPosition = Vector3.zero;
         lineObj.transform.localRotation = Quaternion.identity;
 
@@ -190,7 +216,12 @@ public class MathWave : MonoBehaviour
         _nodes.Clear();
         _hasBase = false;
         _currentFormula = "";
-        functionText.text = "y = ?";
+        functionText.SetText("y = ?");
         CleanupUnusedLines(0);
     }
+
+    public List<MathNode> GetNodes() => _nodes;
+    public float GetMinX() => mathMinX;
+    public float GetMaxX() => mathMaxX;
+    public float GetBeamLength() => beamLength;
 }

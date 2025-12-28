@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("References")] 
-    [SerializeField] private Projectile projectilePrefab;
+    [SerializeField] private MathProjectile projectilePrefab;
     
     private MathWave _mw;
 
@@ -23,7 +23,13 @@ public class PlayerController : MonoBehaviour
 
         Vector3 dir = (mouseWorldPos - transform.position).normalized;
 
-        Projectile p = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        p.Init(dir);
+        MathProjectile p = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        p.Init(
+            dir, 
+            _mw.GetNodes(), 
+            _mw.GetMinX(), 
+            _mw.GetMaxX(), 
+            _mw.GetBeamLength()
+        );
     }
 }

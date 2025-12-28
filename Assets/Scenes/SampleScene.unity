@@ -1340,7 +1340,7 @@ MonoBehaviour:
   audioAmplitude: {fileID: 519420034}
   numPoints: 150
   beamLength: 20
-  startTransitionDistance: 3
+  startTransitionDistance: 1
   mathMinX: -10
   mathMaxX: 20
   maxY: 10
