@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 public class MathProjectile : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("Settings")] 
+    [SerializeField] private int damage = 1;
     [SerializeField] private float baseSpeed = 10f;
     [SerializeField] private float minSpeed = 0.5f; 
     [SerializeField] private float lifeTime = 5f;
@@ -85,20 +86,14 @@ public class MathProjectile : MonoBehaviour
         Vector3 straightPos = _startPosition + (_direction * _distanceTraveled);
         Vector3 offset = _perpendicularDir * mathY;
         
-        // --- DETECTION DU SAUT ---
         Vector3 targetPosition = straightPos + offset;
-
-        // On calcule la distance entre là où on est et là où on va
+        
         float dist = Vector3.Distance(transform.position, targetPosition);
-
-        // Si le saut est trop grand (et que ce n'est pas la première frame où distanceTraveled est petite)
+        
         if (_trailRenderer && dist > maxJumpDistance && _distanceTraveled > 0.1f)
-        {
-            _trailRenderer.Clear(); // Coupe le fil pour éviter la ligne traversante
-        }
+            _trailRenderer.Clear();
         
         transform.position = targetPosition;
-        // -------------------------
         
         float nextDist = _distanceTraveled + (currentSpeed * 0.05f);
         float nextT = nextDist / _beamLength;
@@ -127,5 +122,13 @@ public class MathProjectile : MonoBehaviour
             hasValue = true;
         }
         return y;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(!other.CompareTag("Enemy")) return;
+
+        if (other.TryGetComponent(out EntityHealth entityHealth))
+            entityHealth.ChangeHealth(-damage);
     }
 }
