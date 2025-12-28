@@ -20,6 +20,8 @@ public class MathWave : MonoBehaviour
 
     [Header("Debug")] 
     [SerializeField] private MathOp op;
+    
+    public float TimeValue { get; private set; }
 
     private readonly List<MathNode> _nodes = new();
     private readonly List<LineRenderer> _activeLines = new();
@@ -29,7 +31,13 @@ public class MathWave : MonoBehaviour
     private string _currentFormula;
     private bool _hasBase;
 
-    private void Update() => UpdateWave();
+    private void Update()
+    {
+        float audioAmp = audioAmplitude.Amplitude;
+        if (audioAmp > 0.01f) TimeValue += speed * audioAmp * Time.deltaTime;
+        
+        UpdateWave();
+    }
 
     private void UpdateWave()
     {
@@ -44,9 +52,6 @@ public class MathWave : MonoBehaviour
             _linePool.Enqueue(line);
         }
         _activeLines.Clear();
-
-        float targetSpeed = speed * (1f + audioAmplitude.Amplitude);
-        _audioTime += targetSpeed * Time.deltaTime;
 
         float maxJump = 10f;
         float prevY = 0f;
@@ -63,10 +68,10 @@ public class MathWave : MonoBehaviour
             bool hasValue = false;
             foreach (var node in _nodes)
             {
-                float nodeY = hasValue ? node.Apply(y, x, _audioTime) : node.Value(x, _audioTime);
+                float nodeY = hasValue ? node.Apply(y, x) : node.Value(x);
                 
                 if (!float.IsFinite(nodeY)) nodeY = 0f;
-                nodeY = Mathf.Clamp(nodeY, -maxY*10f, maxY*10f);
+                nodeY = Mathf.Clamp(nodeY, -maxY * 10f, maxY*10f);
 
                 y = !hasValue ? nodeY : nodeY;
 
@@ -111,6 +116,7 @@ public class MathWave : MonoBehaviour
     public void AddNodeTan() => AddNode(new NodeTan(op));
     public void AddNodeAsin() => AddNode(new NodeAsin(op));
     public void AddNodeConstant(float value) => AddNode(new NodeConstant(value, op));
+    public void AddNodeT() => AddNode(new NodeT(op, this));
 
     private void AddNode(MathNode node)
     {
@@ -135,7 +141,6 @@ public class MathWave : MonoBehaviour
         _hasBase = false;
         _currentFormula = "";
         functionText.text = "y = ?";
-        _audioTime = 0f;
         
         foreach (var line in _activeLines)
         {

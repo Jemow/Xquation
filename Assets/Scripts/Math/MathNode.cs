@@ -19,12 +19,12 @@ public abstract class MathNode
         Operation = op;
     }
 
-    public abstract float Value(float x, float t);
+    public abstract float Value(float x);
     public abstract string Formula();
 
-    public float Apply(float currentY, float x, float t)
+    public float Apply(float currentY, float x)
     {
-        float v = Value(x, t);
+        float v = Value(x);
 
         return Operation switch
         {
@@ -33,7 +33,7 @@ public abstract class MathNode
             MathOp.Multiply => currentY * v,
             MathOp.Divide   => Mathf.Abs(v) > Mathf.Epsilon ? currentY / v : 0f,
             MathOp.Power    => Mathf.Pow(currentY, v),
-            MathOp.Compose  => Value(currentY, t),
+            MathOp.Compose  => Value(currentY),
             _ => currentY
         };
     }

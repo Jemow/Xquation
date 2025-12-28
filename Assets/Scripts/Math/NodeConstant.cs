@@ -7,6 +7,6 @@ public class NodeConstant : MathNode
         _value = value;
     }
 
-    public override float Value(float x, float t) => _value;
+    public override float Value(float x) => _value;
     public override string Formula() => _value.ToString();
 }
