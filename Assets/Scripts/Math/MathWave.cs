@@ -5,7 +5,7 @@ using UnityEngine;
 public class MathWave : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private LineRenderer lineRendererPrefab;
     [SerializeField] private TextMeshProUGUI functionText;
     [SerializeField] private AudioAmplitude audioAmplitude;
     
@@ -20,13 +20,13 @@ public class MathWave : MonoBehaviour
 
     [Header("Debug")] 
     [SerializeField] private MathOp op;
-    
-    private readonly List<MathNode> _nodes = new();
-    
-    private float _audioTime;
 
+    private readonly List<MathNode> _nodes = new();
+    private readonly List<LineRenderer> _activeLines = new();
+    private readonly Queue<LineRenderer> _linePool = new();
+
+    private float _audioTime;
     private string _currentFormula;
-    
     private bool _hasBase;
 
     private void Update() => UpdateWave();
@@ -34,10 +34,23 @@ public class MathWave : MonoBehaviour
     private void UpdateWave()
     {
         Vector3 playerPos = transform.position;
-        lineRenderer.positionCount = numPoints;
         
+        foreach (var line in _activeLines)
+        {
+            line.positionCount = 0;
+            line.gameObject.SetActive(false);
+            _linePool.Enqueue(line);
+        }
+        _activeLines.Clear();
+
         float targetSpeed = speed * (1f + audioAmplitude.Amplitude);
         _audioTime += targetSpeed * Time.deltaTime;
+
+        float maxJump = 10f;
+        float prevY = 0f;
+
+        LineRenderer currentLine = GetLineFromPool();
+        int pointIndex = 0;
 
         for (int i = 0; i < numPoints; i++)
         {
@@ -46,7 +59,6 @@ public class MathWave : MonoBehaviour
 
             float y = 0f;
             bool hasValue = false;
-
             foreach (var node in _nodes)
             {
                 if (!hasValue)
@@ -54,21 +66,49 @@ public class MathWave : MonoBehaviour
                     y = node.Value(x, _audioTime);
                     hasValue = true;
                 }
-                else y = node.Apply(y, x, _audioTime);
+                else
+                {
+                    y = node.Apply(y, x, _audioTime);
+                }
             }
-            
-            if (!float.IsFinite(y)) y = 0f;
-            
+
             y *= 1f + audioAmplitude.Amplitude * audioAmplitudeStrength;
-            
             y = Mathf.Clamp(y, -maxY, maxY);
 
-            lineRenderer.SetPosition(i, playerPos + new Vector3(x, y, 0));
+            if (!float.IsFinite(y) || Mathf.Abs(y - prevY) > maxJump)
+            {
+                // Nouveau segment
+                currentLine = GetLineFromPool();
+                pointIndex = 0;
+            }
+
+            currentLine.positionCount = pointIndex + 1;
+            currentLine.SetPosition(pointIndex, playerPos + new Vector3(x, y, 0));
+            pointIndex++;
+            prevY = y;
         }
     }
-    
+
+    private LineRenderer GetLineFromPool()
+    {
+        LineRenderer line;
+        if (_linePool.Count > 0)
+        {
+            line = _linePool.Dequeue();
+            line.gameObject.SetActive(true);
+        }
+        else
+        {
+            line = Instantiate(lineRendererPrefab, transform);
+        }
+
+        _activeLines.Add(line);
+        return line;
+    }
+
     public void AddNodeX() => AddNode(new NodeX(op));
     public void AddNodeSin() => AddNode(new NodeSin(op));
+    public void AddNodeTan() => AddNode(new NodeTan(op));
     public void AddNodeConstant(float value) => AddNode(new NodeConstant(value, op));
 
     private void AddNode(MathNode node)
@@ -93,8 +133,14 @@ public class MathWave : MonoBehaviour
         _nodes.Clear();
         _hasBase = false;
         _currentFormula = "";
-
         functionText.text = "y = ?";
-        lineRenderer.positionCount = 0;
+        
+        foreach (var line in _activeLines)
+        {
+            line.positionCount = 0;
+            line.gameObject.SetActive(false);
+            _linePool.Enqueue(line);
+        }
+        _activeLines.Clear();
     }
 }
