@@ -33,6 +33,8 @@ public class MathWave : MonoBehaviour
 
     private void UpdateWave()
     {
+        if (_nodes.Count == 0) return;
+        
         Vector3 playerPos = transform.position;
         
         foreach (var line in _activeLines)
@@ -61,15 +63,14 @@ public class MathWave : MonoBehaviour
             bool hasValue = false;
             foreach (var node in _nodes)
             {
-                if (!hasValue)
-                {
-                    y = node.Value(x, _audioTime);
-                    hasValue = true;
-                }
-                else
-                {
-                    y = node.Apply(y, x, _audioTime);
-                }
+                float nodeY = hasValue ? node.Apply(y, x, _audioTime) : node.Value(x, _audioTime);
+                
+                if (!float.IsFinite(nodeY)) nodeY = 0f;
+                nodeY = Mathf.Clamp(nodeY, -maxY*10f, maxY*10f);
+
+                y = !hasValue ? nodeY : nodeY;
+
+                hasValue = true;
             }
 
             y *= 1f + audioAmplitude.Amplitude * audioAmplitudeStrength;
@@ -77,7 +78,6 @@ public class MathWave : MonoBehaviour
 
             if (!float.IsFinite(y) || Mathf.Abs(y - prevY) > maxJump)
             {
-                // Nouveau segment
                 currentLine = GetLineFromPool();
                 pointIndex = 0;
             }
@@ -109,6 +109,7 @@ public class MathWave : MonoBehaviour
     public void AddNodeX() => AddNode(new NodeX(op));
     public void AddNodeSin() => AddNode(new NodeSin(op));
     public void AddNodeTan() => AddNode(new NodeTan(op));
+    public void AddNodeAsin() => AddNode(new NodeAsin(op));
     public void AddNodeConstant(float value) => AddNode(new NodeConstant(value, op));
 
     private void AddNode(MathNode node)
@@ -134,6 +135,7 @@ public class MathWave : MonoBehaviour
         _hasBase = false;
         _currentFormula = "";
         functionText.text = "y = ?";
+        _audioTime = 0f;
         
         foreach (var line in _activeLines)
         {

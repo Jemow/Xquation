@@ -5,6 +5,7 @@ public enum MathOp
     Add,
     Subtract,
     Multiply,
+    Divide,
     Power,
     Compose
 }
@@ -30,6 +31,7 @@ public abstract class MathNode
             MathOp.Add      => currentY + v,
             MathOp.Subtract => currentY - v,
             MathOp.Multiply => currentY * v,
+            MathOp.Divide   => Mathf.Abs(v) > Mathf.Epsilon ? currentY / v : 0f,
             MathOp.Power    => Mathf.Pow(currentY, v),
             MathOp.Compose  => Value(currentY, t),
             _ => currentY
@@ -43,6 +45,7 @@ public abstract class MathNode
             MathOp.Add      => $"{current} + {Formula()}",
             MathOp.Subtract => $"{current} - {Formula()}",
             MathOp.Multiply => $"{current} * {Formula()}",
+            MathOp.Divide   => $"{current} / {Formula()}",
             MathOp.Power    => $"({current})<sup>{Formula()}</sup>",
             MathOp.Compose  => Formula().Replace("x", $"{current}"),
             _ => current
