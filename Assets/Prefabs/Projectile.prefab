@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c253a21665ad14387e92af3a23789f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
+  damage: 1
   baseSpeed: 1
   minSpeed: 0.2
   lifeTime: 5
@@ -214,7 +215,7 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.21940067
+        time: 0.19220948
         value: 0
         inSlope: 0
         outSlope: 0

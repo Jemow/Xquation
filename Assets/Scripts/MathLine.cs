@@ -28,7 +28,7 @@ public class MathLine : MonoBehaviour
 
         if (IsTouchingEnemy(other))
         {
-            Debug.Log($"Damage : {damagePerTick} (Touché !)");
+            // Debug.Log($"Damage : {damagePerTick} (Touché !)");
 
             _nextDamageTime[id] = Time.time + damageTickRate;
         }
