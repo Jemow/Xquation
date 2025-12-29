@@ -8,22 +8,23 @@ public class MathWave : MonoBehaviour
     [Header("References")] 
     [SerializeField] private MathLine linePrefab;
     [SerializeField] private TextMeshProUGUI functionText;
+    [SerializeField] private Transform linesParent;
     
     [Header("Parameters")]
     [SerializeField] private float speed = 1f;
 
     [Header("Visual Settings")] 
-    [SerializeField] private int numPoints = 100;
-    [SerializeField] private float beamLength = 20f;
+    [SerializeField] private int numPoints = 500;
     [SerializeField] private float startTransitionDistance = 3f;
 
     [Header("Math Domain")]
     [SerializeField] private float mathMinX = -10f; 
-    [SerializeField] private float mathMaxX = 10f;
+    [SerializeField] private float mathScale = 1f; 
     
-    [Header("Limits")]
-    [SerializeField] private float maxY = 100f;
-    [SerializeField] private float maxJump = 10f;
+    [Header("Limits (The Scissors)")]
+    [SerializeField] private float maxX = 20f; 
+    [SerializeField] private float maxY = 20f;
+    [SerializeField] private float maxJump = 20f;
 
     [Header("Audio Influence")] 
     [SerializeField] private float audioAmplitudeStrength = 0.5f;
@@ -63,13 +64,11 @@ public class MathWave : MonoBehaviour
         if (_nodes.Count == 0) return;
 
         Vector3 playerPos = transform.position;
-        
         Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
         Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(mouseScreenPos);
         mouseWorldPos.z = 0f;
         
         Vector3 forwardDir = (mouseWorldPos - playerPos).normalized;
-        
         Vector3 upDir = new Vector3(-forwardDir.y, forwardDir.x, 0f);
         
         float prevY = 0f;
@@ -82,8 +81,9 @@ public class MathWave : MonoBehaviour
         for (int i = 0; i < numPoints; i++)
         {
             float tNorm = i / (float)(numPoints - 1);
-            float visualX = Mathf.Lerp(0f, beamLength, tNorm); 
-            float mathX = Mathf.Lerp(mathMinX, mathMaxX, tNorm);
+            
+            float visualX = Mathf.Lerp(0f, maxX, tNorm); 
+            float mathX = mathMinX + (visualX * mathScale);
 
             float y = 0f;
             bool hasValue = false;
@@ -92,7 +92,6 @@ public class MathWave : MonoBehaviour
             {
                 float nodeY = hasValue ? node.Apply(y, mathX) : node.Value(mathX);
                 if (!float.IsFinite(nodeY)) nodeY = 0f;
-                nodeY = Mathf.Clamp(nodeY, -maxY * 10f, maxY * 10f);
                 y = !hasValue ? nodeY : nodeY;
                 hasValue = true;
             }
@@ -103,9 +102,12 @@ public class MathWave : MonoBehaviour
             blendFactor = Mathf.SmoothStep(0f, 1f, blendFactor);
             y *= blendFactor;
 
-            y = Mathf.Clamp(y, -maxY, maxY);
+            float clampedY = Mathf.Clamp(y, -maxY, maxY);
 
-            bool isCut = !float.IsFinite(y) || Mathf.Abs(y - prevY) > maxJump;
+            bool isBigJump = Mathf.Abs(clampedY - prevY) > maxJump;
+            bool isSignChange = Mathf.Sign(clampedY) != Mathf.Sign(prevY);
+            
+            bool isCut = !float.IsFinite(y) || (isBigJump && isSignChange);
 
             if (i > 0 && isCut && pointIndex > 0)
             {
@@ -125,18 +127,15 @@ public class MathWave : MonoBehaviour
                 _currentColliderPoints.Clear();
             }
 
-            if (float.IsFinite(y))
+            if (float.IsFinite(clampedY))
             {
                 currentLineObj.Line.positionCount = pointIndex + 1;
-                
-                Vector3 finalPos = playerPos + (forwardDir * visualX) + (upDir * y);
-                
+                Vector3 finalPos = playerPos + (forwardDir * visualX) + (upDir * clampedY);
                 currentLineObj.Line.SetPosition(pointIndex, finalPos);
-                
                 _currentColliderPoints.Add(transform.InverseTransformPoint(finalPos));
                 
                 pointIndex++;
-                prevY = y;
+                prevY = clampedY;
             }
         }
 
@@ -163,7 +162,7 @@ public class MathWave : MonoBehaviour
             lineObj = _linePool.Dequeue();
             lineObj.gameObject.SetActive(true);
         }
-        else lineObj = Instantiate(linePrefab, transform);
+        else lineObj = Instantiate(linePrefab, linesParent);
         
         lineObj.transform.localPosition = Vector3.zero;
         lineObj.transform.localRotation = Quaternion.identity;
@@ -218,6 +217,7 @@ public class MathWave : MonoBehaviour
 
     public List<MathNode> GetNodes() => _nodes;
     public float GetMinX() => mathMinX;
-    public float GetMaxX() => mathMaxX;
-    public float GetBeamLength() => beamLength;
+    public float GetMaxX() => maxX;
+    public float GetBeamLength() => maxX;
+    public float GetMathScale() => mathScale;
 }

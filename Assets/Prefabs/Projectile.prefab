@@ -53,8 +53,11 @@ MonoBehaviour:
   lifeTime: 5
   startTransitionDistance: 1
   maxJumpDistance: 5
+  maxMathY: 50
+  maxDistanceTraveled: 1000
   audioStrength: 1
-  audioScaleStrength: 0.1
+  audioScaleStrength: 1
+  maxScaleMultiplier: 1
 --- !u!58 &9090096610258085654
 CircleCollider2D:
   m_ObjectHideFlags: 0

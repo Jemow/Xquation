@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
             _mw.GetNodes(), 
             _mw.GetMinX(), 
             _mw.GetMaxX(), 
-            _mw.GetBeamLength()
+            _mw.GetMathScale()
         );
     }
 
