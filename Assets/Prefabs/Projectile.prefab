@@ -52,9 +52,14 @@ MonoBehaviour:
   minSpeed: 0.2
   lifeTime: 5
   startTransitionDistance: 1
+  raycastThreshold: 0.5
   maxJumpDistance: 5
   maxMathY: 50
   maxDistanceTraveled: 1000
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  targetTag: Enemy
   audioStrength: 1
   audioScaleStrength: 1
   maxScaleMultiplier: 1

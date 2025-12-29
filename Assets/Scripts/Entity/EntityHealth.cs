@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /**
@@ -14,6 +15,12 @@ public class EntityHealth : MonoBehaviour
     [Header("Health Configuration")]
     [Tooltip("The maximum that the player can have")]
     [SerializeField] [Min(1)] private int maxHealth = 100;
+    
+    [Tooltip("How much time the hit effect will be displayed")]
+    [SerializeField] private float _hitEffectDuration = 0.1f;
+    
+    private SpriteRenderer _spriteRenderer;
+    private Color _originalColor;
 
     int _currentHealth;
 
@@ -34,6 +41,9 @@ public class EntityHealth : MonoBehaviour
 
     protected virtual void Start()
     {
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _originalColor = _spriteRenderer.color;
+        
         // Initialize the entity with the maximum health
         CurrentHealth = maxHealth;
     }
@@ -43,6 +53,7 @@ public class EntityHealth : MonoBehaviour
     /// </summary>
     protected virtual void TakeDamage()
     {
+        StartCoroutine(HitRoutine());
         Debug.Log("Entity took damage");
     }
     
@@ -63,5 +74,12 @@ public class EntityHealth : MonoBehaviour
     {
         Debug.Log("Entity is dead");
         Destroy(gameObject);
+    }
+
+    private IEnumerator HitRoutine()
+    {
+        _spriteRenderer.color = Color.white;
+        yield return new WaitForSeconds(_hitEffectDuration);
+        _spriteRenderer.color = _originalColor;
     }
 }

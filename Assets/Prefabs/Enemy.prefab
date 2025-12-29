@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5150690278076404255}
   - component: {fileID: 5495450855952572020}
   - component: {fileID: -5611761951683235191}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e0d4c08fe5d03a479a9c2b734ff3ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityMovement
-  speed: 2
+  speed: 3
 --- !u!114 &-5150690278076404255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
   maxHealth: 5
+  _hitEffectDuration: 0.1
 --- !u!58 &5495450855952572020
 CircleCollider2D:
   m_ObjectHideFlags: 0
