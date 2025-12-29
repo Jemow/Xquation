@@ -8,6 +8,9 @@ public class MathWave : MonoBehaviour
     [Header("References")] 
     [SerializeField] private MathLine linePrefab;
     [SerializeField] private TextMeshProUGUI functionText;
+    
+    [Header("Parameters")]
+    [SerializeField] private float speed = 1f;
 
     [Header("Visual Settings")] 
     [SerializeField] private int numPoints = 100;
@@ -20,7 +23,7 @@ public class MathWave : MonoBehaviour
     
     [Header("Limits")]
     [SerializeField] private float maxY = 100f;
-    [SerializeField] private float speed = 1f;
+    [SerializeField] private float maxJump = 10f;
 
     [Header("Audio Influence")] 
     [SerializeField] private float audioAmplitudeStrength = 0.5f;
@@ -68,10 +71,8 @@ public class MathWave : MonoBehaviour
         Vector3 forwardDir = (mouseWorldPos - playerPos).normalized;
         
         Vector3 upDir = new Vector3(-forwardDir.y, forwardDir.x, 0f);
-
-        float maxJump = 10f;
+        
         float prevY = 0f;
-
         int activeLineIndex = 0;
         MathLine currentLineObj = GetLineOrReuse(activeLineIndex);
 
@@ -128,17 +129,11 @@ public class MathWave : MonoBehaviour
             {
                 currentLineObj.Line.positionCount = pointIndex + 1;
                 
-                // --- 2. APPLICATION DE LA DIRECTION ---
-                // Position = Player + (Avancer de VisualX) + (Monter de Y sur le coté)
                 Vector3 finalPos = playerPos + (forwardDir * visualX) + (upDir * y);
                 
                 currentLineObj.Line.SetPosition(pointIndex, finalPos);
                 
-                // Pour le collider, il faut transformer le point WORLD en point LOCAL
-                // car le collider est enfant du joueur (si MathWave est sur le joueur).
-                // L'inverse de "Player + ..." c'est "transform.InverseTransformPoint"
                 _currentColliderPoints.Add(transform.InverseTransformPoint(finalPos));
-                // --------------------------------------
                 
                 pointIndex++;
                 prevY = y;
