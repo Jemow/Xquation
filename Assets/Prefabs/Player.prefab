@@ -131,7 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2537994827115802594}
   - component: {fileID: 3281913043029663517}
-  - component: {fileID: 6663650662356637098}
+  - component: {fileID: 4531684857520744341}
   - component: {fileID: 4467519205057976409}
   - component: {fileID: 42431241674556992}
   - component: {fileID: 923458999436918082}
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   projectilePrefab: {fileID: 7393494836022788615, guid: af1348ad04a219f49b7a3cb79d518bbb, type: 3}
   fireRate: 0.2
---- !u!114 &6663650662356637098
+--- !u!114 &4531684857520744341
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,8 +185,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e0d4c08fe5d03a479a9c2b734ff3ac0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  _speed: 5
+  m_EditorClassIdentifier: Assembly-CSharp::EntityMovement
+  speed: 5
 --- !u!114 &4467519205057976409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,8 +239,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6663650662356637098}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+      - m_Target: {fileID: 3281913043029663517}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:

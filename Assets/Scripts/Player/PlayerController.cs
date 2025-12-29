@@ -9,7 +9,10 @@ public class PlayerController : MonoBehaviour
     
     [Header("Parameters")]
     [SerializeField] private float fireRate = 0.2f;
+
+    public static Transform PlayerTransform { get; private set; }
     
+    private EntityMovement _movement;
     private MathWave _mw;
     private Camera _mainCamera;
 
@@ -18,8 +21,11 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        _movement = GetComponent<EntityMovement>();
         _mw = GetComponent<MathWave>();
         _mainCamera = Camera.main;
+        
+        PlayerTransform = transform;
     }
 
     private void Update()
@@ -30,11 +36,17 @@ public class PlayerController : MonoBehaviour
         Fire();
     }
 
+    #region Inputs
+
     public void OnAttack(InputAction.CallbackContext context)
     {
         if(context.started) _isFiring = true;
         else if(context.canceled) _isFiring = false;
     }
+    
+    public void OnMove(InputAction.CallbackContext context) => _movement.Direction = context.ReadValue<Vector2>();
+
+    #endregion
 
     private void Fire()
     {
@@ -59,5 +71,11 @@ public class PlayerController : MonoBehaviour
         _canFire = false;
         yield return new WaitForSeconds(fireRate);
         _canFire = true;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.CompareTag("Enemy"))
+            Debug.Log("Player is dead");
     }
 }

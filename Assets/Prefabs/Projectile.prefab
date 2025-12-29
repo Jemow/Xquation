@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   damage: 1
-  baseSpeed: 1
+  baseSpeed: 2
   minSpeed: 0.2
   lifeTime: 5
   startTransitionDistance: 1
