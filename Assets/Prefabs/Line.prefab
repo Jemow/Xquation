@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97d61b54e8a09243815ee1d4f331243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MathLine
-  damagePerTick: 10
+  damagePerTick: 1
   damageTickRate: 0.2
 --- !u!120 &8103078156664768975
 LineRenderer:

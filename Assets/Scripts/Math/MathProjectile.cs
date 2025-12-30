@@ -113,6 +113,7 @@ public class MathProjectile : MonoBehaviour
         if (other.TryGetComponent(out EntityHealth entityHealth))
         {
             entityHealth.ChangeHealth(-damage);
+            Destroy(gameObject);
         }
     }
 

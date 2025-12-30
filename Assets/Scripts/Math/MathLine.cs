@@ -7,10 +7,12 @@ public class MathLine : MonoBehaviour
     public EdgeCollider2D Collider { get; private set; }
 
     [Header("Settings")]
-    [SerializeField] private float damagePerTick = 10f;
+    [SerializeField] private int damagePerTick = 1;
     [SerializeField] private float damageTickRate = 0.2f;
+    [SerializeField] private ContactFilter2D filter; 
 
     private readonly Dictionary<int, float> _nextDamageTime = new();
+    private readonly List<Collider2D> _results = new();
 
     void Awake()
     {
@@ -18,34 +20,29 @@ public class MathLine : MonoBehaviour
         Collider = GetComponent<EdgeCollider2D>();
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void Update()
     {
-        if (!other.CompareTag("Enemy")) return;
+        if (Collider == null) return;
 
-        int id = other.GetInstanceID();
+        int count = Collider.Overlap(filter, _results);
 
-        if (_nextDamageTime.ContainsKey(id) && Time.time < _nextDamageTime[id]) return;
-
-        if (IsTouchingEnemy(other))
+        for (int i = 0; i < count; i++)
         {
-            // Debug.Log($"Damage : {damagePerTick} (Touché !)");
+            Collider2D other = _results[i];
+            
+            if (!other.CompareTag("Enemy")) continue;
 
-            _nextDamageTime[id] = Time.time + damageTickRate;
-        }
-    }
+            int id = other.GetInstanceID();
 
-    private bool IsTouchingEnemy(Collider2D enemyCollider)
-    {
-        int positionsCount = Line.positionCount;
-        
-        for (int i = 0; i < positionsCount; i++)
-        {
-            if (enemyCollider.bounds.Contains(Line.GetPosition(i)))
-                return true; 
+            if (_nextDamageTime.ContainsKey(id) && Time.time < _nextDamageTime[id]) continue;
+
+            if (other.TryGetComponent(out EntityHealth health))
+            {
+                health.ChangeHealth(-damagePerTick);
+                _nextDamageTime[id] = Time.time + damageTickRate;
+            }
         }
-        
-        return false;
-    }
+    }//
 
     private void OnDisable()
     {
