@@ -11,18 +11,33 @@ public class MathLine : MonoBehaviour
     [SerializeField] private float damageTickRate = 0.2f;
     [SerializeField] private ContactFilter2D filter; 
 
+    [Header("Chaos Visuals")]
+    [SerializeField] private float chaosThreshold = 3f;
+    [SerializeField] private Gradient chaosColor;
+
+    private Gradient _originalColor;
+    private bool _isChaotic;
+
     private readonly Dictionary<int, float> _nextDamageTime = new();
     private readonly List<Collider2D> _results = new();
+    private Vector3[] _positionsBuffer = new Vector3[500];
 
     void Awake()
     {
         Line = GetComponent<LineRenderer>();
         Collider = GetComponent<EdgeCollider2D>();
+        
+        if (Line != null)
+        {
+            _originalColor = Line.colorGradient;
+        }
     }
 
     private void Update()
     {
-        if (Collider == null) return;
+        // CheckChaos();
+
+        if (!Collider) return;
 
         int count = Collider.Overlap(filter, _results);
 
@@ -42,7 +57,35 @@ public class MathLine : MonoBehaviour
                 _nextDamageTime[id] = Time.time + damageTickRate;
             }
         }
-    }//
+    }
+
+    private void CheckChaos()
+    {
+        if (!Line || Line.positionCount < 2) return;
+
+        int count = Line.positionCount;
+        if (_positionsBuffer.Length < count) _positionsBuffer = new Vector3[count];
+
+        Line.GetPositions(_positionsBuffer);
+
+        float totalLength = 0f;
+        for (int i = 0; i < count - 1; i++)
+        {
+            totalLength += Vector3.Distance(_positionsBuffer[i], _positionsBuffer[i + 1]);
+        }
+
+        float directDistance = Vector3.Distance(_positionsBuffer[0], _positionsBuffer[count - 1]);
+        if (directDistance < 0.01f) directDistance = 0.01f;
+
+        float ratio = totalLength / directDistance;
+        bool currentlyChaotic = ratio > chaosThreshold;
+
+        if (currentlyChaotic != _isChaotic)
+        {
+            _isChaotic = currentlyChaotic;
+            Line.colorGradient = _isChaotic ? chaosColor : _originalColor;
+        }
+    }
 
     private void OnDisable()
     {

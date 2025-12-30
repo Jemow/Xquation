@@ -4933,7 +4933,7 @@ MonoBehaviour:
   - {fileID: 1965395859}
   - {fileID: 758427682}
   - {fileID: 1473413675}
-  _spawnInterval: 0.5
+  _spawnInterval: 23
 --- !u!1 &1204993545
 GameObject:
   m_ObjectHideFlags: 0
