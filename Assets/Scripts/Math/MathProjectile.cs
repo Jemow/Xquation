@@ -6,7 +6,6 @@ public class MathProjectile : MonoBehaviour
     [Header("Settings")] 
     [SerializeField] private int damage = 1;
     [SerializeField] private float baseSpeed = 10f;
-    [SerializeField] private float minSpeed = 0.5f; 
     [SerializeField] private float lifeTime = 5f;
     [SerializeField] private float startTransitionDistance = 3f;
     
@@ -20,11 +19,6 @@ public class MathProjectile : MonoBehaviour
     [SerializeField] private LayerMask hitLayers; 
     [SerializeField] private string targetTag = "Enemy"; 
 
-    [Header("Audio")]
-    [SerializeField] private float audioStrength = 5f;
-    [SerializeField] private float audioScaleStrength = 1f;
-    [SerializeField] private float maxScaleMultiplier = 5f;
-
     private TrailRenderer _trailRenderer;
     private Vector3 _startPosition;
     private Vector3 _direction;
@@ -34,12 +28,10 @@ public class MathProjectile : MonoBehaviour
     private float _distanceTraveled;
     private float _mathMinX;
     private float _mathScale;
-    private Vector3 _initialScale;
     
     private void Awake()
     {
         _trailRenderer = GetComponent<TrailRenderer>();
-        _initialScale = transform.localScale;
     }
     
     public void Init(Vector3 direction, List<MathNode> nodes, float minX, float length, float scale)
@@ -54,20 +46,8 @@ public class MathProjectile : MonoBehaviour
 
     private void Update()
     {
-        float currentSpeed = minSpeed;
-        if (AudioAmplitude.Instance)
-        {
-            float amp = AudioAmplitude.Instance.Amplitude;
-            currentSpeed += baseSpeed * amp * audioStrength;
-            float scaleMultiplier = Mathf.Min(1f + (amp * audioScaleStrength), maxScaleMultiplier);
-            transform.localScale = _initialScale * scaleMultiplier;
-        }
-        else
-        {
-            currentSpeed = baseSpeed;
-            transform.localScale = _initialScale;
-        }
-
+        float currentSpeed = baseSpeed;
+        
         float moveStep = currentSpeed * Time.deltaTime;
         float nextDistance = _distanceTraveled + moveStep;
         nextDistance = Mathf.Min(nextDistance, maxDistanceTraveled);

@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,17 +10,76 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform[] _spawnPoints;
     
     [Header("Parameters")]
-    [SerializeField] [Min(0.1f)] private float _spawnInterval = 1f;
+    [SerializeField] Wave[] _waves;
+    
+    [Serializable]
+    struct Wave
+    {
+        public int enemyNumber;
+        public float spawnInterval;
+    }
+
+    private EnemyManager _enemyManager;
+    
+    private int _waveIndex;
+    private int _currentSpawnCount;
     
     public static GameManager Instance { get; private set; }
+    
+    public bool Spawning { get; private set; }
 
     private void Awake()
     {
         if(Instance && Instance != this) Destroy(gameObject);
         else Instance = this;
         
-        InvokeRepeating(nameof(SpawnEnemy), _spawnInterval, _spawnInterval);
+        _enemyManager = EnemyManager.Instance;
     }
 
-    private void SpawnEnemy() => Instantiate(_enemyPrefab, _spawnPoints[Random.Range(0, _spawnPoints.Length)].position, Quaternion.identity);
+    private void Start() => StartWave();
+
+    #region Wave
+
+    private void StartWave()
+    {
+        Spawning = true;
+        StartCoroutine(SpawnRoutine());
+    }
+
+    public void StopWave()
+    {
+        _waveIndex++;
+        _currentSpawnCount = 0;
+
+        if (_waveIndex < _waves.Length)
+        {
+            StartWave();
+            Debug.LogWarning("Next Wave");
+        }
+        else
+        {
+            Debug.LogWarning("Finish Wave");
+        }
+    }
+
+    #endregion
+
+    private void SpawnEnemy()
+    {
+        EnemyController enemyController = Instantiate(_enemyPrefab, _spawnPoints[Random.Range(0, _spawnPoints.Length)].position, Quaternion.identity, _enemyManager.transform);
+        _enemyManager.AddController(enemyController);
+        
+        _currentSpawnCount++;
+        
+        if(_currentSpawnCount >= _waves[_waveIndex].enemyNumber) Spawning = false;
+    }
+
+    private IEnumerator SpawnRoutine()
+    {
+        while (Spawning)
+        {
+            yield return new WaitForSeconds(_waves[_waveIndex].spawnInterval);
+            SpawnEnemy();
+        }
+    }
 }

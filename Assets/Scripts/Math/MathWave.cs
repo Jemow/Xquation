@@ -25,9 +25,6 @@ public class MathWave : MonoBehaviour
     [SerializeField] private float maxX = 20f; 
     [SerializeField] private float maxY = 20f;
     [SerializeField] private float maxJump = 20f;
-
-    [Header("Audio Influence")] 
-    [SerializeField] private float audioAmplitudeStrength = 0.5f;
     
     [Header("Debug")] 
     [SerializeField] private MathOp op;
@@ -39,7 +36,6 @@ public class MathWave : MonoBehaviour
     private readonly Queue<MathLine> _linePool = new();
     private readonly List<Vector2> _currentColliderPoints = new();
     
-    private AudioAmplitude _audioAmplitude;
     private Camera _mainCamera;
 
     private string _currentFormula;
@@ -47,15 +43,12 @@ public class MathWave : MonoBehaviour
 
     private void Start()
     {
-        _audioAmplitude = AudioAmplitude.Instance;
         _mainCamera = Camera.main;
     }
 
     private void Update()
     {
-        float audioAmp = _audioAmplitude.Amplitude;
-        if (audioAmp > 0.01f) TimeValue += speed * audioAmp * Time.deltaTime;
-
+        TimeValue += speed * Time.deltaTime;
         UpdateWave();
     }
 
@@ -95,8 +88,6 @@ public class MathWave : MonoBehaviour
                 y = !hasValue ? nodeY : nodeY;
                 hasValue = true;
             }
-
-            y *= 1f + _audioAmplitude.Amplitude * audioAmplitudeStrength;
             
             float blendFactor = Mathf.Clamp01(visualX / startTransitionDistance);
             blendFactor = Mathf.SmoothStep(0f, 1f, blendFactor);
@@ -218,6 +209,5 @@ public class MathWave : MonoBehaviour
     public List<MathNode> GetNodes() => _nodes;
     public float GetMinX() => mathMinX;
     public float GetMaxX() => maxX;
-    public float GetBeamLength() => maxX;
     public float GetMathScale() => mathScale;
 }
