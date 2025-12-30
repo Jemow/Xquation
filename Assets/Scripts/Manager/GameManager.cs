@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -11,6 +12,10 @@ public class GameManager : MonoBehaviour
     
     [Header("Parameters")]
     [SerializeField] Wave[] _waves;
+
+    [Header("Events")] 
+    [SerializeField] private UnityEvent _onWaveStarted;
+    [SerializeField] private UnityEvent _onWaveEnded;
     
     [Serializable]
     struct Wave
@@ -18,6 +23,8 @@ public class GameManager : MonoBehaviour
         public int enemyNumber;
         public float spawnInterval;
     }
+
+    public int WaveIndex => _waveIndex;
 
     private EnemyManager _enemyManager;
     
@@ -40,10 +47,12 @@ public class GameManager : MonoBehaviour
 
     #region Wave
 
-    private void StartWave()
+    public void StartWave()
     {
         Spawning = true;
         StartCoroutine(SpawnRoutine());
+        
+        _onWaveStarted?.Invoke();
     }
 
     public void StopWave()
@@ -51,15 +60,11 @@ public class GameManager : MonoBehaviour
         _waveIndex++;
         _currentSpawnCount = 0;
 
-        if (_waveIndex < _waves.Length)
-        {
-            StartWave();
-            Debug.LogWarning("Next Wave");
-        }
-        else
+        if (_waveIndex >= _waves.Length)
         {
             Debug.LogWarning("Finish Wave");
         }
+        else _onWaveEnded?.Invoke();
     }
 
     #endregion

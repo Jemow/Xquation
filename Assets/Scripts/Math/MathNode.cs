@@ -44,8 +44,8 @@ public abstract class MathNode
         {
             MathOp.Add      => $"{current} + {Formula()}",
             MathOp.Subtract => $"{current} - {Formula()}",
-            MathOp.Multiply => $"{current} * {Formula()}",
-            MathOp.Divide   => $"{current} / {Formula()}",
+            MathOp.Multiply => $"({current}) * {Formula()}",
+            MathOp.Divide   => $"({current}) / {Formula()}",
             MathOp.Power    => $"({current})<sup>{Formula()}</sup>",
             MathOp.Compose  => Formula().Replace("x", $"{current}"),
             _ => current

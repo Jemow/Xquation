@@ -25,9 +25,6 @@ public class MathWave : MonoBehaviour
     [SerializeField] private float maxX = 20f; 
     [SerializeField] private float maxY = 20f;
     [SerializeField] private float maxJump = 20f;
-    
-    [Header("Debug")] 
-    [SerializeField] private MathOp op;
 
     public float TimeValue { get; private set; }
 
@@ -174,14 +171,14 @@ public class MathWave : MonoBehaviour
         }
     }
 
-    public void AddNodeX() => AddNode(new NodeX(op));
-    public void AddNodeSin() => AddNode(new NodeSin(op));
-    public void AddNodeTan() => AddNode(new NodeTan(op));
-    public void AddNodeAsin() => AddNode(new NodeAsin(op));
-    public void AddNodeConstant(float value) => AddNode(new NodeConstant(value, op));
-    public void AddNodeT() => AddNode(new NodeT(op, this));
+    // public void AddNodeX() => AddNode(new NodeX(op));
+    // public void AddNodeSin() => AddNode(new NodeSin(op));
+    // public void AddNodeTan() => AddNode(new NodeTan(op));
+    // public void AddNodeAsin() => AddNode(new NodeAsin(op));
+    // public void AddNodeConstant(float value) => AddNode(new NodeConstant(value, op));
+    // public void AddNodeT() => AddNode(new NodeT(op, this));
 
-    private void AddNode(MathNode node)
+    public void AddNode(MathNode node)
     {
         if (!_hasBase)
         {
