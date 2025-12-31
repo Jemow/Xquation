@@ -10,7 +10,8 @@ public class EnemyHealth : EntityHealth
 
     protected override void Death()
     {
-        EnemyManager.Instance.RemoveController(_enemyController);
         base.Death();
+        EnemyManager.Instance.RemoveController(_enemyController);
+        Destroy(gameObject);
     }
 }

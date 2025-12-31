@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     public static Transform PlayerTransform { get; private set; }
     
+    private PlayerHealth _playerHealth;
     private EntityMovement _movement;
     private MathWave _mw;
     private Camera _mainCamera;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        _playerHealth = GetComponent<PlayerHealth>();
         _movement = GetComponent<EntityMovement>();
         _mw = GetComponent<MathWave>();
         _mainCamera = Camera.main;
@@ -72,8 +74,6 @@ public class PlayerController : MonoBehaviour
                 _currentBeamEnergy = Mathf.Min(_currentBeamEnergy, maxBeamEnergy);
             }
         }
-        
-        Debug.LogWarning("Beam energy : " + _currentBeamEnergy);
     }
 
     #region Inputs
@@ -131,7 +131,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.gameObject.CompareTag("Enemy"))
-            Debug.Log("Player is dead");
+        if(!other.gameObject.CompareTag("Enemy")) return;
+
+        if (other.gameObject.TryGetComponent(out EnemyController enemyController))
+        {
+            _playerHealth.ChangeHealth(-enemyController.Damage);
+            Vector2 direction = (transform.position - other.transform.position);
+            direction.Normalize();
+            _movement.KnockBack(direction);
+        }
     }
 }

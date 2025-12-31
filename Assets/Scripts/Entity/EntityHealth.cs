@@ -28,7 +28,7 @@ public class EntityHealth : MonoBehaviour
     /// Gets or sets the current health of the entity.
     /// Health is clamped between 0 and MaxHealth.
     /// </summary>
-    private int CurrentHealth 
+    protected int CurrentHealth 
     { 
         get => _currentHealth;
         set
@@ -72,7 +72,6 @@ public class EntityHealth : MonoBehaviour
     protected virtual void Death()
     {
         Debug.Log("Entity is dead");
-        Destroy(gameObject);
     }
 
     private IEnumerator HitRoutine()

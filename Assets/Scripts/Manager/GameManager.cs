@@ -71,6 +71,8 @@ public class GameManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        if(!Spawning) return;
+        
         EnemyController[] enemyList = _waves[_waveIndex].enemies;
         EnemyController enemyController = Instantiate(enemyList[Random.Range(0, enemyList.Length)], _spawnPoints[Random.Range(0, _spawnPoints.Length)].position, Quaternion.identity, _enemyManager.transform);
         _enemyManager.AddController(enemyController);
@@ -87,5 +89,11 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(_waves[_waveIndex].spawnInterval);
             SpawnEnemy();
         }
+    }
+
+    public void GameOver()
+    {
+        Spawning = false;
+        _enemyManager.Clear();
     }
 }
