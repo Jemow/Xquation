@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af978f01084629e459cba252d356068e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
-  maxHealth: 30
+  maxHealth: 20
   _hitEffectDuration: 0.1
 --- !u!58 &5495450855952572020
 CircleCollider2D:
