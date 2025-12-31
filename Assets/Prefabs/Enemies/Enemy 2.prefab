@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e0d4c08fe5d03a479a9c2b734ff3ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityMovement
-  speed: 5
+  speed: 4.5
 --- !u!114 &-5150690278076404255
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,7 +6,8 @@ public class MathProjectile : MonoBehaviour
     [Header("Settings")] 
     [SerializeField] private int damage = 1;
     [SerializeField] private int funcDamage = 2;
-    [SerializeField] private float baseSpeed = 10f;
+    [SerializeField] private float speed = 20f;
+    [SerializeField] private float funcSpeed = 10f;
     [SerializeField] private float lifeTime = 5f;
     [SerializeField] private float startTransitionDistance = 3f;
     
@@ -19,7 +20,12 @@ public class MathProjectile : MonoBehaviour
     [Header("Collision")]
     [SerializeField] private LayerMask hitLayers; 
     [SerializeField] private string targetTag = "Enemy"; 
+    
+    [Header("Visual")]
+    [SerializeField] private Material funcProjectileMaterial;
+    [SerializeField] private Color funcColor = Color.yellow;
 
+    private SpriteRenderer _spriteRenderer;
     private TrailRenderer _trailRenderer;
     private Vector3 _startPosition;
     private Vector3 _direction;
@@ -34,6 +40,7 @@ public class MathProjectile : MonoBehaviour
     
     private void Awake()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _trailRenderer = GetComponent<TrailRenderer>();
     }
     
@@ -46,11 +53,24 @@ public class MathProjectile : MonoBehaviour
         _mathMinX = minX;
         _mathScale = scale;
         _followFunction = followFunction;
+
+        if (_followFunction)
+        {
+            _spriteRenderer.material = funcProjectileMaterial;
+            _spriteRenderer.color = funcColor;
+            _trailRenderer.material = funcProjectileMaterial;
+            Gradient gradient = new Gradient();
+            gradient.SetKeys(
+                new[] { new GradientColorKey(funcColor, 0.0f), new GradientColorKey(funcColor, 1.0f) },
+                new [] { new GradientAlphaKey(funcColor.a, 0.0f), new GradientAlphaKey(funcColor.a, 1.0f) }
+            );
+            _trailRenderer.colorGradient = gradient;
+        }
     }
 
     private void Update()
     {
-        float currentSpeed = baseSpeed;
+        float currentSpeed = _followFunction ? funcSpeed : speed;
         
         float moveStep = currentSpeed * Time.deltaTime;
         float nextDistance = _distanceTraveled + moveStep;

@@ -219,6 +219,5 @@ public class MathWave : MonoBehaviour
 
     public List<MathNode> GetNodes() => _nodes;
     public float GetMinX() => mathMinX;
-    public float GetMaxX() => maxX;
     public float GetMathScale() => mathScale;
 }

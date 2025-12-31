@@ -6129,7 +6129,7 @@ MonoBehaviour:
   _waves:
   - enemies:
     - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
-    enemyNumber: 5
+    enemyNumber: 1
     spawnInterval: 3
   - enemies:
     - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
@@ -7486,6 +7486,7 @@ Transform:
   - {fileID: 1204567842}
   - {fileID: 1009685988}
   - {fileID: 583273959}
+  - {fileID: 607389393}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1412397150
@@ -11622,7 +11623,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1406160761}
     m_Modifications:
     - target: {fileID: 42431241674556992, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: m_ActionEvents.Array.size
@@ -11794,15 +11795,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2537994827115802594, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2537994827115802594, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2537994827115802594, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2537994827115802594, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11858,4 +11859,3 @@ SceneRoots:
   - {fileID: 1701338416}
   - {fileID: 1444703876}
   - {fileID: 1406160761}
-  - {fileID: 2917670434737168540}

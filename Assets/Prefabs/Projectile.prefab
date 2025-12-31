@@ -48,7 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   damage: 1
-  baseSpeed: 10
+  funcDamage: 2
+  speed: 20
+  funcSpeed: 10
   lifeTime: 5
   startTransitionDistance: 1
   projectileRadius: 0.5
@@ -59,6 +61,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   targetTag: Enemy
+  funcProjectileMaterial: {fileID: 2100000, guid: f5e945213b44d024fae201b5374b85ce, type: 2}
+  funcColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!58 &9090096610258085654
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -219,7 +223,7 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.2399033
+        time: 0.13558277
         value: 0
         inSlope: 0
         outSlope: 0
@@ -232,7 +236,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.8509804, b: 0, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}

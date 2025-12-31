@@ -6,18 +6,25 @@ public class MathLine : MonoBehaviour
     public LineRenderer Line { get; private set; }
     public EdgeCollider2D Collider { get; private set; }
 
+    [Header("References")] 
+    [SerializeField] private Material _attackMaterial;
+    [SerializeField] private Material _chaosMaterial;
+
     [Header("Settings")]
     [SerializeField] private int damagePerTick = 1;
     [SerializeField] private float damageTickRate = 0.2f;
+    [SerializeField] private float chaosThreshold = 3f;
     [SerializeField] private ContactFilter2D filter; 
 
-    [Header("Chaos Visuals")]
-    [SerializeField] private float chaosThreshold = 3f;
+    [Header("Visuals")]
+    [SerializeField] private Gradient normalColor;
+    [SerializeField] private Gradient attackColor;
     [SerializeField] private Gradient chaosColor;
 
     public static bool IsAttacking;
 
-    private Gradient _originalColor;
+    private Material _defaultMaterial;
+    private bool _wasAttacking;
     
     private bool _isChaotic;
 
@@ -25,21 +32,36 @@ public class MathLine : MonoBehaviour
     private readonly List<Collider2D> _results = new();
     private Vector3[] _positionsBuffer = new Vector3[500];
 
-    void Awake()
+    private void Awake()
     {
         Line = GetComponent<LineRenderer>();
         Collider = GetComponent<EdgeCollider2D>();
         
-        if (Line != null)
+        if (Line)
         {
-            _originalColor = Line.colorGradient;
+            _defaultMaterial = Line.sharedMaterial;
+            Line.colorGradient = normalColor;
         }
+    }
+
+    private void OnEnable()
+    {
+        _wasAttacking = !IsAttacking;
+        UpdateVisuals(true);
     }
 
     private void Update()
     {
+        if (_wasAttacking != IsAttacking)
+        {
+            _wasAttacking = IsAttacking;
+            _isChaotic = false; 
+            UpdateVisuals(true);
+        }
+
         if(!IsAttacking) return;
-        // CheckChaos();
+
+        CheckChaos();
 
         if (!Collider) return;
 
@@ -59,6 +81,39 @@ public class MathLine : MonoBehaviour
             {
                 health.ChangeHealth(-damagePerTick);
                 _nextDamageTime[id] = Time.time + damageTickRate;
+            }
+        }
+    }
+
+    private void UpdateVisuals(bool forceUpdate = false)
+    {
+        if (!Line) return;
+
+        if (!IsAttacking)
+        {
+            if (Line.sharedMaterial != _defaultMaterial || forceUpdate)
+            {
+                Line.sharedMaterial = _defaultMaterial;
+                Line.colorGradient = normalColor;
+            }
+        }
+        else
+        {
+            if (_isChaotic)
+            {
+                if (Line.sharedMaterial != _chaosMaterial || forceUpdate)
+                {
+                    Line.sharedMaterial = _chaosMaterial;
+                    Line.colorGradient = chaosColor;
+                }
+            }
+            else
+            {
+                if (Line.sharedMaterial != _attackMaterial || forceUpdate)
+                {
+                    Line.sharedMaterial = _attackMaterial;
+                    Line.colorGradient = attackColor;
+                }
             }
         }
     }
@@ -87,7 +142,7 @@ public class MathLine : MonoBehaviour
         if (currentlyChaotic != _isChaotic)
         {
             _isChaotic = currentlyChaotic;
-            Line.colorGradient = _isChaotic ? chaosColor : _originalColor;
+            UpdateVisuals();
         }
     }
 
