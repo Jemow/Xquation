@@ -38,10 +38,16 @@ public class PlayerController : MonoBehaviour
 
     #region Inputs
 
-    public void OnAttack(InputAction.CallbackContext context)
+    public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
         if(context.started) _isFiring = true;
         else if(context.canceled) _isFiring = false;
+    }
+
+    public void OnSecondaryAttack(InputAction.CallbackContext context)
+    {
+        if(context.started) MathLine.IsAttacking = true;
+        else if(context.canceled) MathLine.IsAttacking = false;
     }
     
     public void OnMove(InputAction.CallbackContext context) => _movement.Direction = context.ReadValue<Vector2>();

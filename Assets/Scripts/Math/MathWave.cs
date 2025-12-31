@@ -17,6 +17,12 @@ public class MathWave : MonoBehaviour
     [SerializeField] private int numPoints = 500;
     [SerializeField] private float startTransitionDistance = 3f;
 
+    [Header("Juice")]
+    [Tooltip("Tremblement vertical (Amplitude)")]
+    [SerializeField] private float attackAmplitudeVibration = 0.3f;
+    [Tooltip("Tremblement horizontal (Décalage de phase)")]
+    [SerializeField] private float attackPhaseVibration = 0.5f;
+
     [Header("Math Domain")]
     [SerializeField] private float mathMinX = -10f; 
     [SerializeField] private float mathScale = 1f; 
@@ -54,6 +60,8 @@ public class MathWave : MonoBehaviour
         if (_nodes.Count == 0) return;
 
         Vector3 playerPos = transform.position;
+        if (Mouse.current == null) return;
+
         Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
         Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(mouseScreenPos);
         mouseWorldPos.z = 0f;
@@ -68,12 +76,21 @@ public class MathWave : MonoBehaviour
         int pointIndex = 0;
         _currentColliderPoints.Clear();
 
+        float currentAmpVibration = 1f;
+        float currentPhaseVibration = 0f;
+
+        if (MathLine.IsAttacking)
+        {
+            currentAmpVibration = Random.Range(1f - attackAmplitudeVibration, 1f + attackAmplitudeVibration);
+            currentPhaseVibration = Random.Range(-attackPhaseVibration, attackPhaseVibration);
+        }
+
         for (int i = 0; i < numPoints; i++)
         {
             float tNorm = i / (float)(numPoints - 1);
             
             float visualX = Mathf.Lerp(0f, maxX, tNorm); 
-            float mathX = mathMinX + (visualX * mathScale);
+            float mathX = mathMinX + (visualX * mathScale) + currentPhaseVibration;
 
             float y = 0f;
             bool hasValue = false;
@@ -85,6 +102,8 @@ public class MathWave : MonoBehaviour
                 y = !hasValue ? nodeY : nodeY;
                 hasValue = true;
             }
+
+            y *= currentAmpVibration;
             
             float blendFactor = Mathf.Clamp01(visualX / startTransitionDistance);
             blendFactor = Mathf.SmoothStep(0f, 1f, blendFactor);
@@ -170,13 +189,6 @@ public class MathWave : MonoBehaviour
             _activeLines.RemoveAt(i);
         }
     }
-
-    // public void AddNodeX() => AddNode(new NodeX(op));
-    // public void AddNodeSin() => AddNode(new NodeSin(op));
-    // public void AddNodeTan() => AddNode(new NodeTan(op));
-    // public void AddNodeAsin() => AddNode(new NodeAsin(op));
-    // public void AddNodeConstant(float value) => AddNode(new NodeConstant(value, op));
-    // public void AddNodeT() => AddNode(new NodeT(op, this));
 
     public void AddNode(MathNode node)
     {

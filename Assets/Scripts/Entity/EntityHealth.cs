@@ -56,7 +56,6 @@ public class EntityHealth : MonoBehaviour
     protected virtual void TakeDamage()
     {
         StartCoroutine(HitRoutine());
-        Debug.Log("Entity took damage");
     }
     
     /// <summary>

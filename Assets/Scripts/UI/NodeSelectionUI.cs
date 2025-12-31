@@ -19,13 +19,13 @@ public class NodeSelectionUI : MonoBehaviour
     [SerializeField] private MathWave mathWave;
 
     [Header("UI References")]
-    [SerializeField] private SelectButton[] nodeButtons; // Tes boutons pour les fonctions
-    [SerializeField] private OpButtonSetup[] operationButtons; // Tes boutons pour +, -, *, etc.
+    [SerializeField] private SelectButton[] nodeButtons;
+    [SerializeField] private OpButtonSetup[] operationButtons;
 
     private NodeData _selectedNodeData;
     private MathOp _selectedOp;
 
-    private void Awake()
+    private void Start()
     {
         InitOperationButtons();
     }
@@ -37,7 +37,7 @@ public class NodeSelectionUI : MonoBehaviour
             OpButtonSetup setup = operationButtons[i];
             
             setup.button.Button.onClick.RemoveAllListeners();
-            setup.button.Tmp.SetText(setup.name); // Ou setup.op.ToString()
+            setup.button.Tmp.SetText(setup.name);
             setup.button.Button.onClick.AddListener(() => OnOpSelected(setup.button, setup.op));
 
             if (i == 0) OnOpSelected(setup.button, setup.op);

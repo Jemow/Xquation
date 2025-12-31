@@ -15,7 +15,10 @@ public class MathLine : MonoBehaviour
     [SerializeField] private float chaosThreshold = 3f;
     [SerializeField] private Gradient chaosColor;
 
+    public static bool IsAttacking;
+
     private Gradient _originalColor;
+    
     private bool _isChaotic;
 
     private readonly Dictionary<int, float> _nextDamageTime = new();
@@ -35,6 +38,7 @@ public class MathLine : MonoBehaviour
 
     private void Update()
     {
+        if(!IsAttacking) return;
         // CheckChaos();
 
         if (!Collider) return;

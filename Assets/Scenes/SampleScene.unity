@@ -377,19 +377,19 @@ MonoBehaviour:
   - {fileID: 1967038117}
   - {fileID: 447033110}
   operationButtons:
-  - name: Add
+  - name: +
     op: 0
     button: {fileID: 1685064683}
-  - name: Sub
+  - name: '-'
     op: 1
     button: {fileID: 1955339082}
-  - name: Mul
+  - name: '*'
     op: 2
     button: {fileID: 324191942}
-  - name: Div
+  - name: /
     op: 3
     button: {fileID: 131205013}
-  - name: Comp
+  - name: ()
     op: 5
     button: {fileID: 1374920440}
 --- !u!1 &70624878
@@ -3179,7 +3179,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 4860b711e0f78b741ac3b9ad90a2ea7e, type: 3}
+  m_Resource: {fileID: 8300000, guid: 6bd95ec12aee99741bf30e009f3caaaf, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -6127,11 +6127,27 @@ MonoBehaviour:
   - {fileID: 1473413675}
   _waves:
   - enemyNumber: 5
-    spawnInterval: 2
+    spawnInterval: 3
   - enemyNumber: 10
     spawnInterval: 2
   - enemyNumber: 20
     spawnInterval: 1
+  - enemyNumber: 40
+    spawnInterval: 1
+  - enemyNumber: 30
+    spawnInterval: 1
+  - enemyNumber: 50
+    spawnInterval: 0.7
+  - enemyNumber: 70
+    spawnInterval: 0.7
+  - enemyNumber: 100
+    spawnInterval: 0.5
+  - enemyNumber: 120
+    spawnInterval: 0.5
+  - enemyNumber: 150
+    spawnInterval: 0.5
+  - enemyNumber: 200
+    spawnInterval: 0.3
   _onWaveStarted:
     m_PersistentCalls:
       m_Calls:
@@ -6422,6 +6438,17 @@ Transform:
   - {fileID: 1361121981}
   m_Father: {fileID: 107487684}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1238816599 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3281913043029663517, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+  m_PrefabInstance: {fileID: 2917670434737168540}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932cd5c4617f4d94f83d750e192efad4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!1 &1249657655
 GameObject:
   m_ObjectHideFlags: 0
@@ -11562,6 +11589,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 42431241674556992, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 42431241674556992, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_ActionId
+      value: 2bf14ce8-0c51-4b2d-8f9a-cf6ee24132d8
+      objectReference: {fileID: 0}
+    - target: {fileID: 42431241674556992, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_ActionName
+      value: 'Player/Beam[/Mouse/rightButton]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 42431241674556992, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 42431241674556992, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 42431241674556992, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1238816599}
+    - target: {fileID: 42431241674556992, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 42431241674556992, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSecondaryAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 42431241674556992, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 42431241674556992, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2537994827115802594, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11615,8 +11682,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1894832008}
     - target: {fileID: 4467519205057976409, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: attackPhaseVibration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467519205057976409, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: audioAmplitudeStrength
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467519205057976409, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: attackAmplitudeVibration
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8222976906542073356, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: m_Name
