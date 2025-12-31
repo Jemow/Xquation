@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
 
     private void Fire()
     {
+        if(MathLine.IsAttacking) return;
+        
         Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
         Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(mouseScreenPos);
         mouseWorldPos.z = 0f;
