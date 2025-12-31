@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private bool _isFiring;
     private bool _canFire = true;
+    private bool _funcProjectile;
 
     private void Start()
     {
@@ -49,6 +50,12 @@ public class PlayerController : MonoBehaviour
         if(context.started) MathLine.IsAttacking = true;
         else if(context.canceled) MathLine.IsAttacking = false;
     }
+
+    public void OnFuncMode(InputAction.CallbackContext context)
+    {
+        if(context.started) _funcProjectile = true;
+        else if(context.canceled) _funcProjectile = false;
+    }
     
     public void OnMove(InputAction.CallbackContext context) => _movement.Direction = context.ReadValue<Vector2>();
 
@@ -69,8 +76,8 @@ public class PlayerController : MonoBehaviour
             dir, 
             _mw.GetNodes(), 
             _mw.GetMinX(), 
-            _mw.GetMaxX(), 
-            _mw.GetMathScale()
+            _mw.GetMathScale(),
+            _mw.NodeCount != 0 && _funcProjectile
         );
     }
 

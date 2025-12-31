@@ -5,6 +5,7 @@ public class MathProjectile : MonoBehaviour
 {
     [Header("Settings")] 
     [SerializeField] private int damage = 1;
+    [SerializeField] private int funcDamage = 2;
     [SerializeField] private float baseSpeed = 10f;
     [SerializeField] private float lifeTime = 5f;
     [SerializeField] private float startTransitionDistance = 3f;
@@ -29,12 +30,14 @@ public class MathProjectile : MonoBehaviour
     private float _mathMinX;
     private float _mathScale;
     
+    private bool _followFunction;
+    
     private void Awake()
     {
         _trailRenderer = GetComponent<TrailRenderer>();
     }
     
-    public void Init(Vector3 direction, List<MathNode> nodes, float minX, float length, float scale)
+    public void Init(Vector3 direction, List<MathNode> nodes, float minX, float scale, bool followFunction)
     {
         _direction = direction.normalized;
         _perpendicularDir = new Vector3(-_direction.y, _direction.x, 0f);
@@ -42,6 +45,7 @@ public class MathProjectile : MonoBehaviour
         _nodes = new List<MathNode>(nodes);
         _mathMinX = minX;
         _mathScale = scale;
+        _followFunction = followFunction;
     }
 
     private void Update()
@@ -53,13 +57,23 @@ public class MathProjectile : MonoBehaviour
         nextDistance = Mathf.Min(nextDistance, maxDistanceTraveled);
 
         Vector3 currentPos = transform.position;
+        float mathY = 0f;
 
-        float mathX = _mathMinX + (nextDistance * _mathScale);
-        float rawMathY = CalculateMathY(mathX);
-        
-        float blendFactor = Mathf.Clamp01(nextDistance / startTransitionDistance);
-        blendFactor = Mathf.SmoothStep(0f, 1f, blendFactor);
-        float mathY = Mathf.Clamp(rawMathY * blendFactor, -maxMathY, maxMathY);
+        if (_followFunction)
+        {
+            float mathX = _mathMinX + (nextDistance * _mathScale);
+            float rawMathY = CalculateMathY(mathX);
+            
+            float blendFactor = Mathf.Clamp01(nextDistance / startTransitionDistance);
+            blendFactor = Mathf.SmoothStep(0f, 1f, blendFactor);
+            mathY = Mathf.Clamp(rawMathY * blendFactor, -maxMathY, maxMathY);
+            
+            UpdateRotation(nextDistance, currentSpeed, blendFactor);
+        }
+        else
+        {
+            transform.right = _direction;
+        }
 
         Vector3 nextPos = _startPosition + (_direction * nextDistance) + (_perpendicularDir * mathY);
 
@@ -69,30 +83,24 @@ public class MathProjectile : MonoBehaviour
         {
             RaycastHit2D hit = Physics2D.Linecast(currentPos, nextPos, hitLayers);
             
-            if (hit.collider != null && hit.collider.CompareTag(targetTag))
-            {
+            if (hit.collider && hit.collider.CompareTag(targetTag))
                 ApplyDamage(hit.collider);
-            }
         }
         else if (stepDistance > maxJumpDistance && _trailRenderer && _distanceTraveled > 0.1f)
-        {
             _trailRenderer.Clear();
-        }
 
         transform.position = nextPos;
         _distanceTraveled = nextDistance;
 
         lifeTime -= Time.deltaTime;
         if (lifeTime <= 0f) Destroy(gameObject);
-
-        UpdateRotation(nextDistance, currentSpeed, blendFactor);
     }
 
     private void ApplyDamage(Collider2D other)
     {
         if (other.TryGetComponent(out EntityHealth entityHealth))
         {
-            entityHealth.ChangeHealth(-damage);
+            entityHealth.ChangeHealth(-(_followFunction ? funcDamage : damage));
             Destroy(gameObject);
         }
     }

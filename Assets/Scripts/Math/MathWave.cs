@@ -21,9 +21,7 @@ public class MathWave : MonoBehaviour
     [SerializeField] private float startTransitionDistance = 3f;
 
     [Header("Juice")]
-    [Tooltip("Tremblement vertical (Amplitude)")]
     [SerializeField] private float attackAmplitudeVibration = 0.3f;
-    [Tooltip("Tremblement horizontal (Décalage de phase)")]
     [SerializeField] private float attackPhaseVibration = 0.5f;
 
     [Header("Math Domain")]
@@ -36,6 +34,7 @@ public class MathWave : MonoBehaviour
     [SerializeField] private float maxJump = 20f;
 
     public float TimeValue { get; private set; }
+    public float NodeCount => _nodes.Count;
 
     private readonly List<MathNode> _nodes = new();
     private readonly List<MathLine> _activeLines = new();
