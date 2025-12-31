@@ -10,6 +10,12 @@ public class PlayerController : MonoBehaviour
     [Header("Parameters")]
     [SerializeField] private float fireRate = 0.2f;
 
+    [Header("Beam Energy")]
+    [SerializeField] private float maxBeamEnergy = 100f;
+    [SerializeField] private float energyConsumption = 20f;
+    [SerializeField] private float energyRecover = 15f;
+    [SerializeField] private float recoverDelay = 1f;
+
     public static Transform PlayerTransform { get; private set; }
     
     private EntityMovement _movement;
@@ -19,6 +25,9 @@ public class PlayerController : MonoBehaviour
     private bool _isFiring;
     private bool _canFire = true;
     private bool _funcProjectile;
+    
+    private float _currentBeamEnergy;
+    private float _lastConsumTime;
 
     private void Start()
     {
@@ -27,14 +36,44 @@ public class PlayerController : MonoBehaviour
         _mainCamera = Camera.main;
         
         PlayerTransform = transform;
+        _currentBeamEnergy = maxBeamEnergy;
     }
 
     private void Update()
     {
+        HandleBeamEnergy();
+
         if(!_isFiring || !_canFire) return;
 
         StartCoroutine(FireCoroutine());
         Fire();
+    }
+
+    private void HandleBeamEnergy()
+    {
+        if(_mw.NodeCount == 0) return;
+        
+        if (MathLine.IsAttacking)
+        {
+            _currentBeamEnergy -= energyConsumption * Time.deltaTime;
+            _lastConsumTime = Time.time;
+            
+            if (_currentBeamEnergy <= 0)
+            {
+                _currentBeamEnergy = 0;
+                MathLine.IsAttacking = false;
+            }
+        }
+        else
+        {
+            if (_currentBeamEnergy < maxBeamEnergy && Time.time > _lastConsumTime + recoverDelay)
+            {
+                _currentBeamEnergy += energyRecover * Time.deltaTime;
+                _currentBeamEnergy = Mathf.Min(_currentBeamEnergy, maxBeamEnergy);
+            }
+        }
+        
+        Debug.LogWarning("Beam energy : " + _currentBeamEnergy);
     }
 
     #region Inputs
@@ -47,8 +86,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnSecondaryAttack(InputAction.CallbackContext context)
     {
-        if(context.started) MathLine.IsAttacking = true;
-        else if(context.canceled) MathLine.IsAttacking = false;
+        if (context.started && _currentBeamEnergy > 0) 
+            MathLine.IsAttacking = true;
+        else if (context.canceled) 
+            MathLine.IsAttacking = false;
     }
 
     public void OnFuncMode(InputAction.CallbackContext context)

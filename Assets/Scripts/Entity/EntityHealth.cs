@@ -18,8 +18,7 @@ public class EntityHealth : MonoBehaviour
     
     [Tooltip("How much time the hit effect will be displayed")]
     [SerializeField] private float _hitEffectDuration = 0.1f;
-
-    private EnemyController _enemyController;
+    
     private SpriteRenderer _spriteRenderer;
     private Color _originalColor;
 
@@ -42,7 +41,6 @@ public class EntityHealth : MonoBehaviour
 
     protected virtual void Start()
     {
-        _enemyController = GetComponent<EnemyController>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _originalColor = _spriteRenderer.color;
         
@@ -71,10 +69,9 @@ public class EntityHealth : MonoBehaviour
     /// <summary>
     /// Handles the entity's death. Override to customize death behavior.
     /// </summary>
-    private void Death()
+    protected virtual void Death()
     {
         Debug.Log("Entity is dead");
-        EnemyManager.Instance.RemoveController(_enemyController);
         Destroy(gameObject);
     }
 

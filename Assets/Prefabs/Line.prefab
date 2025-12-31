@@ -50,7 +50,7 @@ MonoBehaviour:
   _chaosMaterial: {fileID: 2100000, guid: 097520f2179c05e479bc90b006168674, type: 2}
   damagePerTick: 1
   damageTickRate: 0.2
-  chaosThreshold: 3
+  chaosThreshold: 8
   filter:
     useTriggers: 0
     useLayerMask: 0
