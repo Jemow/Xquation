@@ -7,7 +7,6 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private EnemyController _enemyPrefab;
     [SerializeField] private Transform[] _spawnPoints;
     
     [Header("Parameters")]
@@ -20,6 +19,7 @@ public class GameManager : MonoBehaviour
     [Serializable]
     struct Wave
     {
+        public EnemyController[] enemies;
         public int enemyNumber;
         public float spawnInterval;
     }
@@ -71,7 +71,8 @@ public class GameManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        EnemyController enemyController = Instantiate(_enemyPrefab, _spawnPoints[Random.Range(0, _spawnPoints.Length)].position, Quaternion.identity, _enemyManager.transform);
+        EnemyController[] enemyList = _waves[_waveIndex].enemies;
+        EnemyController enemyController = Instantiate(enemyList[Random.Range(0, enemyList.Length)], _spawnPoints[Random.Range(0, _spawnPoints.Length)].position, Quaternion.identity, _enemyManager.transform);
         _enemyManager.AddController(enemyController);
         
         _currentSpawnCount++;

@@ -11,7 +11,10 @@ public class MathWave : MonoBehaviour
     [SerializeField] private Transform linesParent;
     
     [Header("Parameters")]
-    [SerializeField] private float speed = 1f;
+    [SerializeField] private float speed = 5f;
+
+    [Tooltip("The speed when the user is attacking")]
+    [SerializeField] private float speedAttack = 10f;
 
     [Header("Visual Settings")] 
     [SerializeField] private int numPoints = 500;
@@ -51,7 +54,7 @@ public class MathWave : MonoBehaviour
 
     private void Update()
     {
-        TimeValue += speed * Time.deltaTime;
+        TimeValue += (MathLine.IsAttacking ? speedAttack : speed) * Time.deltaTime;
         UpdateWave();
     }
 

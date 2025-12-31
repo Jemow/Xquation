@@ -372,6 +372,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3eba6bf2c10769d4c809d4607c10a7a0, type: 2}
   - {fileID: 11400000, guid: 19a57daa216c2754b96be8075b18efcc, type: 2}
   mathWave: {fileID: 607389398}
+  minConstantValue: -3
+  maxConstantValue: 3
   nodeButtons:
   - {fileID: 310301000}
   - {fileID: 1967038117}
@@ -6087,7 +6089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d3bea423690d9c47a82653fb414f577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  _enemyPrefab: {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
   _spawnPoints:
   - {fileID: 1532860630}
   - {fileID: 263793951}
@@ -6126,27 +6127,61 @@ MonoBehaviour:
   - {fileID: 758427682}
   - {fileID: 1473413675}
   _waves:
-  - enemyNumber: 5
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
+    enemyNumber: 5
     spawnInterval: 3
-  - enemyNumber: 10
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
+    enemyNumber: 10
     spawnInterval: 2
-  - enemyNumber: 20
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
+    enemyNumber: 20
     spawnInterval: 1
-  - enemyNumber: 40
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
+    - {fileID: 3306874887185355438, guid: 9b819c1da45fc4d43abe26ad9401bdc6, type: 3}
+    enemyNumber: 40
     spawnInterval: 1
-  - enemyNumber: 30
+  - enemies:
+    - {fileID: 3306874887185355438, guid: 9b819c1da45fc4d43abe26ad9401bdc6, type: 3}
+    - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
+    enemyNumber: 30
     spawnInterval: 1
-  - enemyNumber: 50
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
+    - {fileID: 3306874887185355438, guid: 9b819c1da45fc4d43abe26ad9401bdc6, type: 3}
+    enemyNumber: 50
     spawnInterval: 0.7
-  - enemyNumber: 70
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
+    - {fileID: 3306874887185355438, guid: 9b819c1da45fc4d43abe26ad9401bdc6, type: 3}
+    enemyNumber: 70
     spawnInterval: 0.7
-  - enemyNumber: 100
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
+    - {fileID: 3306874887185355438, guid: 422434461c88cfd44b8ecca622f50f88, type: 3}
+    - {fileID: 3306874887185355438, guid: 9b819c1da45fc4d43abe26ad9401bdc6, type: 3}
+    enemyNumber: 100
     spawnInterval: 0.5
-  - enemyNumber: 120
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
+    - {fileID: 3306874887185355438, guid: 422434461c88cfd44b8ecca622f50f88, type: 3}
+    - {fileID: 3306874887185355438, guid: 9b819c1da45fc4d43abe26ad9401bdc6, type: 3}
+    enemyNumber: 120
     spawnInterval: 0.5
-  - enemyNumber: 150
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
+    - {fileID: 3306874887185355438, guid: 422434461c88cfd44b8ecca622f50f88, type: 3}
+    - {fileID: 3306874887185355438, guid: 9b819c1da45fc4d43abe26ad9401bdc6, type: 3}
+    enemyNumber: 150
     spawnInterval: 0.5
-  - enemyNumber: 200
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
+    - {fileID: 3306874887185355438, guid: 422434461c88cfd44b8ecca622f50f88, type: 3}
+    - {fileID: 3306874887185355438, guid: 9b819c1da45fc4d43abe26ad9401bdc6, type: 3}
+    enemyNumber: 200
     spawnInterval: 0.3
   _onWaveStarted:
     m_PersistentCalls:
@@ -11683,7 +11718,7 @@ PrefabInstance:
       objectReference: {fileID: 1894832008}
     - target: {fileID: 4467519205057976409, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: attackPhaseVibration
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4467519205057976409, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: audioAmplitudeStrength
@@ -11691,7 +11726,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4467519205057976409, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: attackAmplitudeVibration
-      value: 1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8222976906542073356, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: m_Name

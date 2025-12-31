@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NodeSelectionUI : MonoBehaviour
 {
-    [System.Serializable]
+    [Serializable]
     public struct OpButtonSetup
     {
         public string name; 
@@ -18,12 +17,17 @@ public class NodeSelectionUI : MonoBehaviour
     [SerializeField] private NodeData[] nodes;
     [SerializeField] private MathWave mathWave;
 
+    [Header("Constant Generation Settings")]
+    [SerializeField] private float minConstantValue = 1f;
+    [SerializeField] private float maxConstantValue = 10f;
+
     [Header("UI References")]
     [SerializeField] private SelectButton[] nodeButtons;
     [SerializeField] private OpButtonSetup[] operationButtons;
 
     private NodeData _selectedNodeData;
     private MathOp _selectedOp;
+    private float _selectedConstantValue;
 
     private void Start()
     {
@@ -68,19 +72,29 @@ public class NodeSelectionUI : MonoBehaviour
             NodeData data = randomNodes[i];
             SelectButton selectButton = nodeButtons[i];
             
+            float generatedValue = 0f;
+            string buttonText = data.nodeName;
+
+            if (data.nodeType == NodeType.Constant)
+            {
+                generatedValue = (float)Math.Round(UnityEngine.Random.Range(minConstantValue, maxConstantValue));
+                buttonText = $"{generatedValue}";
+            }
+            
             selectButton.SetSelected(false);
             selectButton.Button.onClick.RemoveAllListeners();
-            selectButton.Tmp.SetText(data.nodeName);
+            selectButton.Tmp.SetText(buttonText);
             
-            selectButton.Button.onClick.AddListener(() => OnNodeSelected(selectButton, data));
+            selectButton.Button.onClick.AddListener(() => OnNodeSelected(selectButton, data, generatedValue));
             
-            if(i == 0) OnNodeSelected(selectButton, data);
+            if(i == 0) OnNodeSelected(selectButton, data, generatedValue);
         }
     }
 
-    private void OnNodeSelected(SelectButton clickedButton, NodeData data)
+    private void OnNodeSelected(SelectButton clickedButton, NodeData data, float constantValue)
     {
         _selectedNodeData = data;
+        _selectedConstantValue = constantValue;
 
         foreach (var button in nodeButtons)
         {
@@ -99,7 +113,7 @@ public class NodeSelectionUI : MonoBehaviour
             case NodeType.Tan: mathWave.AddNode(new NodeTan(_selectedOp)); break;
             case NodeType.Asin: mathWave.AddNode(new NodeAsin(_selectedOp)); break;
             case NodeType.T: mathWave.AddNode(new NodeT(_selectedOp, mathWave)); break;
-            case NodeType.Constant: mathWave.AddNode(new NodeConstant(_selectedNodeData.defaultValue, _selectedOp)); break;
+            case NodeType.Constant: mathWave.AddNode(new NodeConstant(_selectedConstantValue, _selectedOp)); break;
         }
         
         GameManager.Instance.StartWave();

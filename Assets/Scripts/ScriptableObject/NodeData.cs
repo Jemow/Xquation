@@ -7,5 +7,4 @@ public class NodeData : ScriptableObject
 {
     public string nodeName;
     public NodeType nodeType;
-    public float defaultValue;
 }
