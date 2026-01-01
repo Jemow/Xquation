@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 public class MathProjectile : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class MathProjectile : MonoBehaviour
     [Header("Collision")]
     [SerializeField] private LayerMask hitLayers; 
     [SerializeField] private string targetTag = "Enemy"; 
+    [SerializeField] private float cameraShakeAmplitude = 1f;
+    [SerializeField] private float cameraShakeFrequency = 0.5f;
+    [SerializeField] private float cameraShakeDuration = 0.2f;
     
     [Header("Visual")]
     [SerializeField] private Material funcProjectileMaterial;
@@ -139,6 +143,7 @@ public class MathProjectile : MonoBehaviour
         if (other.CompareTag(targetTag))
         {
             ApplyDamage(other);
+            CameraShakeManager.Instance.Shake(cameraShakeAmplitude, cameraShakeFrequency, cameraShakeDuration);
         }
     }
 

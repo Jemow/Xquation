@@ -61,6 +61,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   targetTag: Enemy
+  cameraShakeAmplitude: 2
+  cameraShakeFrequency: 0.5
+  cameraShakeDuration: 0.2
   funcProjectileMaterial: {fileID: 2100000, guid: f5e945213b44d024fae201b5374b85ce, type: 2}
   funcColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!58 &9090096610258085654
