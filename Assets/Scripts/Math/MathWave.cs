@@ -19,6 +19,7 @@ public class MathWave : MonoBehaviour
     [Header("Visual Settings")] 
     [SerializeField] private int numPoints = 500;
     [SerializeField] private float startTransitionDistance = 3f;
+    [SerializeField] private float computerGlow = 3f;
 
     [Header("Juice")]
     [SerializeField] private float attackAmplitudeVibration = 0.3f;
@@ -42,6 +43,7 @@ public class MathWave : MonoBehaviour
     private readonly List<Vector2> _currentColliderPoints = new();
     
     private Camera _mainCamera;
+    private Material _material;
 
     private string _currentFormula;
     private bool _hasBase;
@@ -49,6 +51,7 @@ public class MathWave : MonoBehaviour
     private void Start()
     {
         _mainCamera = Camera.main;
+        _material = GetComponent<Renderer>().material;
     }
 
     private void Update()
@@ -215,6 +218,16 @@ public class MathWave : MonoBehaviour
         _currentFormula = "";
         functionText.SetText("y = ?");
         CleanupUnusedLines(0);
+    }
+
+    public void AttackDisplay()
+    {
+        _material.SetFloat("_Glow", computerGlow);
+    }
+
+    public void NormalDisplay()
+    {
+        _material.SetFloat("_Glow", 0f);
     }
 
     public List<MathNode> GetNodes() => _nodes;

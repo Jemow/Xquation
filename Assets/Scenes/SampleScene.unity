@@ -365,8 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5913a56de234104c8b599c4f9cc6cc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NodeSelectionUI
-  _mathWave: {fileID: 607389398}
-  mathWave: {fileID: 607389398}
+  mathWave: {fileID: 2917670434737168541}
   nodes:
   - {fileID: 11400000, guid: 917f18217a8eb334c8831d60b6e889ee, type: 2}
   - {fileID: 11400000, guid: d16a70d693a674c4890f2bf87abdd3b1, type: 2}
@@ -635,7 +634,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 607389398}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MathWave, Assembly-CSharp
         m_MethodName: AddNodeTan
         m_Mode: 1
@@ -2284,7 +2283,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 607389398}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MathWave, Assembly-CSharp
         m_MethodName: Clear
         m_Mode: 1
@@ -3996,17 +3995,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2537994827115802594, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
   m_PrefabInstance: {fileID: 2917670434737168540}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &607389398 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4467519205057976409, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
-  m_PrefabInstance: {fileID: 2917670434737168540}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e7ea3384be65384bbf3c6ba3e8d744a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MathWave
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -5270,7 +5258,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 607389398}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MathWave, Assembly-CSharp
         m_MethodName: AddNodeConstant
         m_Mode: 4
@@ -6863,7 +6851,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 607389398}
+      - m_Target: {fileID: 2917670434737168541}
         m_TargetAssemblyTypeName: MathWave, Assembly-CSharp
         m_MethodName: Clear
         m_Mode: 1
@@ -8287,7 +8275,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 607389398}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MathWave, Assembly-CSharp
         m_MethodName: AddNodeSin
         m_Mode: 1
@@ -8454,7 +8442,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 607389398}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MathWave, Assembly-CSharp
         m_MethodName: AddNodeAsin
         m_Mode: 1
@@ -8621,7 +8609,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 607389398}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MathWave, Assembly-CSharp
         m_MethodName: AddNodeT
         m_Mode: 1
@@ -32549,7 +32537,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 607389398}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MathWave, Assembly-CSharp
         m_MethodName: AddNodeX
         m_Mode: 1
@@ -32819,6 +32807,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1432760370697451529, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a3240d4726354b40a8d46e8da23b012, type: 2}
+    - target: {fileID: 1887998529410976243, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: functionText
+      value: 
+      objectReference: {fileID: 1894832008}
     - target: {fileID: 2537994827115802594, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -32879,11 +32875,23 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 1753356308}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2527773645658270448, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+--- !u!114 &2917670434737168541 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1887998529410976243, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+  m_PrefabInstance: {fileID: 2917670434737168540}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e7ea3384be65384bbf3c6ba3e8d744a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MathWave
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

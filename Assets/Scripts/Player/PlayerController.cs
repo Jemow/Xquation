@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("References")] 
     [SerializeField] private MathProjectile projectilePrefab;
+    [SerializeField] private Transform projectileSpawn;
     
     [Header("Parameters")]
     [SerializeField] private float fireRate = 0.2f;
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerHealth = GetComponent<PlayerHealth>();
         _movement = GetComponent<EntityMovement>();
-        _mw = GetComponent<MathWave>();
+        _mw = GetComponentInChildren<MathWave>();
         _mainCamera = Camera.main;
         
         _playerSpawn = transform.position;
@@ -74,10 +75,16 @@ public class PlayerController : MonoBehaviour
 
     public void OnSecondaryAttack(InputAction.CallbackContext context)
     {
-        if (context.started && _currentBeamEnergy > 0) 
+        if (context.started && _currentBeamEnergy > 0)
+        {
+            _mw.AttackDisplay();
             MathLine.IsAttacking = true;
-        else if (context.canceled) 
+        }
+        else if (context.canceled)
+        {
+            _mw.NormalDisplay();
             MathLine.IsAttacking = false;
+        }
     }
 
     public void OnFuncMode(InputAction.CallbackContext context)
@@ -102,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 dir = (mouseWorldPos - transform.position).normalized;
 
-        MathProjectile p = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        MathProjectile p = Instantiate(projectilePrefab, projectileSpawn.position, Quaternion.identity);
         p.Init(
             dir, 
             _mw.GetNodes(), 

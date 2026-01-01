@@ -15,8 +15,6 @@ public class NodeSelectionUI : MonoBehaviour
     }
 
     [Header("References")] 
-    [SerializeField] private MathWave _mathWave; // Garde celui-ci si tu l'utilises
-    // Note: Tu as deux références MathWave dans ton script original, je garde les deux pour ne rien casser.
     [SerializeField] private MathWave mathWave; 
 
     [Header("Data")]
@@ -114,9 +112,8 @@ public class NodeSelectionUI : MonoBehaviour
         }
         
         CheckCompose();
-        
-        // On récupère la formule. Si c'est null ou vide, _currentFormula sera null/vide, c'est géré plus bas.
-        if(_mathWave) _currentFormula = _mathWave.GetFormula();
+
+        if(mathWave) _currentFormula = mathWave.GetFormula();
         UpdateFormulaPlaceholder();
     }
 
