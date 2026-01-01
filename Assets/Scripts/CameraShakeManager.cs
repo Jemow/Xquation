@@ -34,6 +34,8 @@ public class CameraShakeManager : MonoBehaviour
     public static CameraShakeManager Instance { get; private set; }
 
     private Coroutine _shakeCoroutine;
+    
+    private bool _isShaking;
 
     private void Awake()
     {
@@ -45,11 +47,26 @@ public class CameraShakeManager : MonoBehaviour
 
     public void Shake(float amplitude, float frequency, float duration)
     {
+        if(_isShaking) return;
+        
         _cameraShake.AmplitudeGain = amplitude;
         _cameraShake.FrequencyGain = frequency;
         
         if(_shakeCoroutine != null) StopCoroutine(_shakeCoroutine);
         _shakeCoroutine = StartCoroutine(ShakeTime(duration));
+    }
+
+    public void StartShake(float amplitude, float frequency)
+    {
+        _isShaking = true;
+        _cameraShake.AmplitudeGain = amplitude;
+        _cameraShake.FrequencyGain = frequency;
+    }
+
+    public void StopShake()
+    {
+        _isShaking = false;
+        ResetShake();
     }
 
     private void ResetShake()
@@ -61,6 +78,6 @@ public class CameraShakeManager : MonoBehaviour
     private IEnumerator ShakeTime(float duration)
     {
         yield return new WaitForSeconds(duration);
-        ResetShake();
+        if(!_isShaking) ResetShake();
     }
 }

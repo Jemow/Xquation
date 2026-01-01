@@ -99,21 +99,15 @@ public class MathLine : MonoBehaviour
         }
         else
         {
-            if (_isChaotic)
+            if (_isChaotic && (Line.sharedMaterial != _chaosMaterial || forceUpdate))
             {
-                if (Line.sharedMaterial != _chaosMaterial || forceUpdate)
-                {
-                    Line.sharedMaterial = _chaosMaterial;
-                    Line.colorGradient = chaosColor;
-                }
+                Line.sharedMaterial = _chaosMaterial;
+                Line.colorGradient = chaosColor;
             }
-            else
+            else if (Line.sharedMaterial != _attackMaterial || forceUpdate)
             {
-                if (Line.sharedMaterial != _attackMaterial || forceUpdate)
-                {
                     Line.sharedMaterial = _attackMaterial;
                     Line.colorGradient = attackColor;
-                }
             }
         }
     }
