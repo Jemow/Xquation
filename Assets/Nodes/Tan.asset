@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NodeData
   nodeName: tan(x)
   nodeType: 2
+  rarity: 2
+  canCompose: 1

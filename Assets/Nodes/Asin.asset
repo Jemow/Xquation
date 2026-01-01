@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NodeData
   nodeName: asin(x)
   nodeType: 3
+  rarity: 1
+  canCompose: 1
