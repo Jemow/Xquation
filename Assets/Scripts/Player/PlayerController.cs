@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
 
     private void Fire()
     {
-        if(MathLine.IsAttacking) return;
+        if(MathLine.IsAttacking || GameManager.Instance.IsGameOver) return;
         
         Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
         Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(mouseScreenPos);
@@ -150,5 +150,11 @@ public class PlayerController : MonoBehaviour
             direction.Normalize();
             _movement.KnockBack(direction);
         }
+    }
+
+    public void ResetEnergy()
+    {
+        _currentBeamEnergy = maxBeamEnergy;
+        UpdateBeamSlider();
     }
 }

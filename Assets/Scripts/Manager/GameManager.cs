@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     [Header("Events")] 
     [SerializeField] private UnityEvent _onWaveStarted;
     [SerializeField] private UnityEvent _onWaveEnded;
+    [SerializeField] private UnityEvent _onGameOver;
+    [SerializeField] private UnityEvent _onRestart;
     
     [Serializable]
     struct Wave
@@ -25,6 +27,8 @@ public class GameManager : MonoBehaviour
     }
 
     public int WaveIndex => _waveIndex;
+    
+    public bool IsGameOver { get; private set; }
 
     private EnemyManager _enemyManager;
     
@@ -92,8 +96,24 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Spawning = false;
+        IsGameOver = true;
+        
         _enemyManager.Clear();
         
         StopAllCoroutines();
+        
+        _onGameOver?.Invoke();
+    }
+
+    public void Restart()
+    {
+        _waveIndex = 0;
+        _currentSpawnCount = 0;
+        
+        IsGameOver = false;
+        
+        StartWave();
+        
+        _onRestart?.Invoke();
     }
 }

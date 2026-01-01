@@ -17,7 +17,7 @@ public class PlayerHealth : EntityHealth
         if(amount < 0 && _isInvincible) return;
         base.ChangeHealth(amount);
         StartCoroutine(Invincibility());
-        healthSlider.value = HealthRatio;
+        UpdateHeathSlider();
     }
 
     protected override void Death()
@@ -31,4 +31,12 @@ public class PlayerHealth : EntityHealth
         yield return new WaitForSeconds(invisibleTime);
         _isInvincible = false;
     }
+
+    public override void ResetHealth()
+    {
+        base.ResetHealth();
+        UpdateHeathSlider();
+    }
+    
+    private void UpdateHeathSlider() => healthSlider.value = HealthRatio;
 }

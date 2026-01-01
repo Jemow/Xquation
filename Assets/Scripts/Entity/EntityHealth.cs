@@ -82,4 +82,6 @@ public class EntityHealth : MonoBehaviour
         yield return new WaitForSeconds(_hitEffectDuration);
         _spriteRenderer.color = _originalColor;
     }
+    
+    public virtual void ResetHealth() => CurrentHealth = maxHealth;
 }

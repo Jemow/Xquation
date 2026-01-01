@@ -27,7 +27,7 @@ public class EntityMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!_knockBack)
+        if(!_knockBack && !GameManager.Instance.IsGameOver)
             Move();
     }
 
