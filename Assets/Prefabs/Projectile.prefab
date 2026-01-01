@@ -54,7 +54,7 @@ MonoBehaviour:
   lifeTime: 5
   startTransitionDistance: 1
   projectileRadius: 0.5
-  maxJumpDistance: 1
+  maxJumpDistance: 10
   maxMathY: 50
   maxDistanceTraveled: 1000
   hitLayers:

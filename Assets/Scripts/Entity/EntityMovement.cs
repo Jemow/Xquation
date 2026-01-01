@@ -27,7 +27,7 @@ public class EntityMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!_knockBack && !GameManager.Instance.IsGameOver)
+        if(!_knockBack && GameManager.Instance.IsPlaying)
             Move();
     }
 
@@ -64,4 +64,10 @@ public class EntityMovement : MonoBehaviour
     }
 
     #endregion
+
+    public void ResetDirection()
+    {
+        Direction = Vector2.zero;
+        _rb.linearVelocity = Vector2.zero;
+    }
 }

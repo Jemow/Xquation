@@ -44,7 +44,7 @@ public class MathProjectile : MonoBehaviour
         _trailRenderer = GetComponent<TrailRenderer>();
     }
     
-    public void Init(Vector3 direction, List<MathNode> nodes, float minX, float scale, bool followFunction)
+    public void Init(Vector3 direction, List<MathNode> nodes, float minX, float scale, float limitY, bool followFunction)
     {
         _direction = direction.normalized;
         _perpendicularDir = new Vector3(-_direction.y, _direction.x, 0f);
@@ -53,6 +53,9 @@ public class MathProjectile : MonoBehaviour
         _mathMinX = minX;
         _mathScale = scale;
         _followFunction = followFunction;
+        
+        // On applique la limite du Wave au projectile
+        maxMathY = limitY;
 
         if (_followFunction)
         {
@@ -99,18 +102,24 @@ public class MathProjectile : MonoBehaviour
 
         float stepDistance = Vector3.Distance(currentPos, nextPos);
 
+        // CORRECTION ICI : On bouge D'ABORD, on check APRES
+        // Cela permet au TrailRenderer de dessiner le trait moche du saut, 
+        // puis on le Clear() immédiatement après dans le 'else if'.
+        transform.position = nextPos;
+        _distanceTraveled = nextDistance;
+
         if (stepDistance > projectileRadius && stepDistance <= maxJumpDistance)
         {
+            // Note: Linecast utilise currentPos (sauvegardé au début) et nextPos, donc c'est safe
             RaycastHit2D hit = Physics2D.Linecast(currentPos, nextPos, hitLayers);
             
             if (hit.collider && hit.collider.CompareTag(targetTag))
                 ApplyDamage(hit.collider);
         }
         else if (stepDistance > maxJumpDistance && _trailRenderer && _distanceTraveled > 0.1f)
+        {
             _trailRenderer.Clear();
-
-        transform.position = nextPos;
-        _distanceTraveled = nextDistance;
+        }
 
         lifeTime -= Time.deltaTime;
         if (lifeTime <= 0f) Destroy(gameObject);

@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     public int WaveIndex => _waveIndex;
     
-    public bool IsGameOver { get; private set; }
+    public bool IsPlaying { get; private set; }
 
     private EnemyManager _enemyManager;
     
@@ -54,6 +54,8 @@ public class GameManager : MonoBehaviour
     public void StartWave()
     {
         Spawning = true;
+        IsPlaying = true;
+        
         StartCoroutine(SpawnRoutine());
         
         _onWaveStarted?.Invoke();
@@ -61,6 +63,8 @@ public class GameManager : MonoBehaviour
 
     public void StopWave()
     {
+        IsPlaying = false;
+        
         _waveIndex++;
         _currentSpawnCount = 0;
 
@@ -96,7 +100,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Spawning = false;
-        IsGameOver = true;
+        IsPlaying = false;
         
         _enemyManager.Clear();
         
@@ -109,8 +113,6 @@ public class GameManager : MonoBehaviour
     {
         _waveIndex = 0;
         _currentSpawnCount = 0;
-        
-        IsGameOver = false;
         
         StartWave();
         

@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NodeSelectionUI : MonoBehaviour
 {
@@ -13,9 +14,18 @@ public class NodeSelectionUI : MonoBehaviour
         public SelectButton button;
     }
 
+    [Header("References")] 
+    [SerializeField] private MathWave _mathWave; // Garde celui-ci si tu l'utilises
+    // Note: Tu as deux références MathWave dans ton script original, je garde les deux pour ne rien casser.
+    [SerializeField] private MathWave mathWave; 
+
     [Header("Data")]
     [SerializeField] private NodeData[] nodes;
-    [SerializeField] private MathWave mathWave;
+
+    [Header("Rarity Weights")]
+    [SerializeField] private int commonWeight = 60;
+    [SerializeField] private int rareWeight = 30;
+    [SerializeField] private int epicWeight = 10;
 
     [Header("Constant Generation Settings")]
     [SerializeField] private float minConstantValue = 1f;
@@ -24,14 +34,24 @@ public class NodeSelectionUI : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private SelectButton[] nodeButtons;
     [SerializeField] private OpButtonSetup[] operationButtons;
+    [SerializeField] private TextMeshProUGUI _formulaPlaceholderTmp;
+
+    [Header("Events")] 
+    [SerializeField] private UnityEvent onComposeValid;
+    [SerializeField] private UnityEvent onComposeInvalid;
 
     private NodeData _selectedNodeData;
     private MathOp _selectedOp;
+
+    private string _currentFormula;
+    
     private float _selectedConstantValue;
 
     private void Start()
     {
         InitOperationButtons();
+        // Initialisation visuelle si c'est null
+        if (_formulaPlaceholderTmp) _formulaPlaceholderTmp.text = "y = ?";
     }
 
     private void InitOperationButtons()
@@ -56,38 +76,81 @@ public class NodeSelectionUI : MonoBehaviour
         {
             setup.button.SetSelected(setup.button == clickedButton);
         }
+        
+        CheckCompose();
+        UpdateFormulaPlaceholder();
     }
 
     public void GenerateNodes()
     {
-        List<NodeData> randomNodes = nodes
-            .OrderBy(x => UnityEngine.Random.value)
-            .Take(nodeButtons.Length)
-            .ToList();
-
+        List<NodeData> availableNodes = new List<NodeData>(nodes);
         _selectedNodeData = null;
 
         for (int i = 0; i < nodeButtons.Length; i++)
         {
-            NodeData data = randomNodes[i];
+            if (availableNodes.Count == 0) break;
+            
+            NodeData pickedData = PickWeightedNode(availableNodes);
+            availableNodes.Remove(pickedData);
+
             SelectButton selectButton = nodeButtons[i];
             
             float generatedValue = 0f;
-            string buttonText = data.nodeName;
+            string buttonText = pickedData.nodeName;
 
-            if (data.nodeType == NodeType.Constant)
+            if (pickedData.nodeType == NodeType.Constant)
             {
-                generatedValue = (float)Math.Round(UnityEngine.Random.Range(minConstantValue, maxConstantValue));
-                buttonText = $"{generatedValue}";
+                generatedValue = (float)Math.Round(UnityEngine.Random.Range(minConstantValue, maxConstantValue) * 2f) / 2f;
+                buttonText = generatedValue.ToString();
             }
             
             selectButton.SetSelected(false);
             selectButton.Button.onClick.RemoveAllListeners();
             selectButton.Tmp.SetText(buttonText);
             
-            selectButton.Button.onClick.AddListener(() => OnNodeSelected(selectButton, data, generatedValue));
+            selectButton.Button.onClick.AddListener(() => OnNodeSelected(selectButton, pickedData, generatedValue));
             
-            if(i == 0) OnNodeSelected(selectButton, data, generatedValue);
+            if(i == 0) OnNodeSelected(selectButton, pickedData, generatedValue);
+        }
+        
+        CheckCompose();
+        
+        // On récupère la formule. Si c'est null ou vide, _currentFormula sera null/vide, c'est géré plus bas.
+        if(_mathWave) _currentFormula = _mathWave.GetFormula();
+        UpdateFormulaPlaceholder();
+    }
+
+    private NodeData PickWeightedNode(List<NodeData> pool)
+    {
+        int totalWeight = 0;
+        foreach (var node in pool)
+        {
+            totalWeight += GetRarityWeight(node.rarity);
+        }
+
+        int randomValue = UnityEngine.Random.Range(0, totalWeight);
+        int currentWeight = 0;
+
+        foreach (var node in pool)
+        {
+            currentWeight += GetRarityWeight(node.rarity);
+            if (randomValue < currentWeight)
+            {
+                return node;
+            }
+        }
+
+        return pool[0];
+    }
+
+    private int GetRarityWeight(Rarity rarity)
+    {
+        switch (rarity)
+        {
+            case Rarity.Common: return commonWeight;
+            case Rarity.Rare: return rareWeight;
+            case Rarity.Epic: return epicWeight;
+            default: return commonWeight;
         }
     }
 
@@ -100,23 +163,74 @@ public class NodeSelectionUI : MonoBehaviour
         {
             button.SetSelected(button == clickedButton);
         }
+        
+        CheckCompose();
+        UpdateFormulaPlaceholder();
     }
     
     public void ApplySelection()
     {
         if (_selectedNodeData == null) return;
 
-        switch (_selectedNodeData.nodeType)
+        // Utilise la ref 'mathWave' ou '_mathWave' selon ton setup, j'utilise mathWave ici comme dans ton snippet
+        if (mathWave != null)
         {
-            case NodeType.X: mathWave.AddNode(new NodeX(_selectedOp)); break;
-            case NodeType.Sin: mathWave.AddNode(new NodeSin(_selectedOp)); break;
-            case NodeType.Tan: mathWave.AddNode(new NodeTan(_selectedOp)); break;
-            case NodeType.Asin: mathWave.AddNode(new NodeAsin(_selectedOp)); break;
-            case NodeType.T: mathWave.AddNode(new NodeT(_selectedOp, mathWave)); break;
-            case NodeType.Constant: mathWave.AddNode(new NodeConstant(_selectedConstantValue, _selectedOp)); break;
+            switch (_selectedNodeData.nodeType)
+            {
+                case NodeType.X: mathWave.AddNode(new NodeX(_selectedOp)); break;
+                case NodeType.Sin: mathWave.AddNode(new NodeSin(_selectedOp)); break;
+                case NodeType.Tan: mathWave.AddNode(new NodeTan(_selectedOp)); break;
+                case NodeType.Asin: mathWave.AddNode(new NodeAsin(_selectedOp)); break;
+                case NodeType.T: mathWave.AddNode(new NodeT(_selectedOp, mathWave)); break;
+                case NodeType.Constant: mathWave.AddNode(new NodeConstant(_selectedConstantValue, _selectedOp)); break;
+            }
         }
         
         GameManager.Instance.StartWave();
         gameObject.SetActive(false);
+    }
+
+    private void CheckCompose()
+    {
+        if (_selectedOp != MathOp.Compose)
+        {
+            onComposeValid?.Invoke();
+            return;
+        }
+        
+        if(_selectedNodeData != null && !_selectedNodeData.canCompose)
+            onComposeInvalid?.Invoke();
+        else 
+            onComposeValid?.Invoke();
+    }
+
+    private void UpdateFormulaPlaceholder()
+    {
+        if (_selectedNodeData == null) return;
+
+        MathNode tempNode = null;
+        
+        // Création du node temporaire pour la preview
+        switch (_selectedNodeData.nodeType)
+        {
+            case NodeType.X: tempNode = new NodeX(_selectedOp); break;
+            case NodeType.Sin: tempNode = new NodeSin(_selectedOp); break;
+            case NodeType.Tan: tempNode = new NodeTan(_selectedOp); break;
+            case NodeType.Asin: tempNode = new NodeAsin(_selectedOp); break;
+            case NodeType.T: tempNode = new NodeT(_selectedOp, mathWave); break;
+            case NodeType.Constant: tempNode = new NodeConstant(_selectedConstantValue, _selectedOp); break;
+        }
+
+        if (tempNode != null && _formulaPlaceholderTmp)
+        {
+            string preview;
+            
+            if (string.IsNullOrEmpty(_currentFormula) || _currentFormula == "0")
+                preview = tempNode.Formula();
+            else
+                preview = tempNode.ApplyFormula(_currentFormula);
+
+            _formulaPlaceholderTmp.SetText($"y = {preview}");
+        }
     }
 }

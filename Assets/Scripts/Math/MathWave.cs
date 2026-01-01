@@ -218,6 +218,8 @@ public class MathWave : MonoBehaviour
     }
 
     public List<MathNode> GetNodes() => _nodes;
+    public string GetFormula() => _currentFormula;
     public float GetMinX() => mathMinX;
     public float GetMathScale() => mathScale;
+    public float GetMaxY() => maxY;
 }

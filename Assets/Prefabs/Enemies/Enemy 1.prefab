@@ -63,6 +63,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityMovement
   speed: 2
+  _knockBackForce: 5
+  _knockBackDuration: 0.5
+  _knockBackDamping: 5
 --- !u!114 &-8693705640299613458
 MonoBehaviour:
   m_ObjectHideFlags: 0
