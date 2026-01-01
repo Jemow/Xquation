@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float energyConsumption = 20f;
     [SerializeField] private float energyRecover = 15f;
     [SerializeField] private float recoverDelay = 1f;
+    [SerializeField] private float beamShakeAmplitude = 10f;
+    [SerializeField] private float beamShakeFrequency = 5f;
     
     [Header("UI")]
     [SerializeField] private Slider beamSlider;
@@ -75,15 +77,28 @@ public class PlayerController : MonoBehaviour
 
     public void OnSecondaryAttack(InputAction.CallbackContext context)
     {
+        if (GameManager.Instance.IsPaused)
+        {
+            MathLine.IsAttacking = false;
+            CameraShakeManager.Instance.StopShake();
+            return;
+        }
+        
         if (context.started && _currentBeamEnergy > 0)
         {
             _mw.AttackDisplay();
+            if(_mw.NodeCount == 0) return;
+            
             MathLine.IsAttacking = true;
+            CameraShakeManager.Instance.StartShake(beamShakeAmplitude, beamShakeFrequency);
         }
         else if (context.canceled)
         {
             _mw.NormalDisplay();
+            if(_mw.NodeCount == 0) return;
+            
             MathLine.IsAttacking = false;
+            CameraShakeManager.Instance.StopShake();
         }
     }
 
