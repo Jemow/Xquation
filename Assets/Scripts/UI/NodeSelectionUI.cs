@@ -105,6 +105,7 @@ public class NodeSelectionUI : MonoBehaviour
             selectButton.SetSelected(false);
             selectButton.Button.onClick.RemoveAllListeners();
             selectButton.Tmp.SetText(buttonText);
+            selectButton.SetRarity(pickedData.rarity);
             
             selectButton.Button.onClick.AddListener(() => OnNodeSelected(selectButton, pickedData, generatedValue));
             
