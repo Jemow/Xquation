@@ -12,6 +12,5 @@ public class EnemyHealth : EntityHealth
     {
         base.Death();
         EnemyManager.Instance.RemoveController(_enemyController);
-        Destroy(gameObject);
     }
 }

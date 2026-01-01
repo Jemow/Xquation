@@ -9,4 +9,9 @@ public class PlayerAnimation : EntityAnimation
         
         base.MoveAnimation();
     }
+
+    public override void OnDeathAnimationEnded()
+    {
+        GameManager.Instance.GameOver();
+    }
 }

@@ -20,11 +20,6 @@ public class PlayerHealth : EntityHealth
         UpdateHeathSlider();
     }
 
-    protected override void Death()
-    {
-        GameManager.Instance.GameOver();
-    }
-
     private IEnumerator Invincibility()
     {
         _isInvincible = true;

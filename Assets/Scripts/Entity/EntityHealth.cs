@@ -12,6 +12,9 @@ using UnityEngine;
 
 public class EntityHealth : MonoBehaviour
 {
+    [Header("References")] 
+    [SerializeField] private Collider2D[] _collider2Ds;
+    
     [Header("Health Configuration")]
     [Tooltip("The maximum that the player can have")]
     [SerializeField] [Min(1)] private int maxHealth = 100;
@@ -35,13 +38,17 @@ public class EntityHealth : MonoBehaviour
             else _currentHealth = value;
         }
     }
-    
+
+    private EntityMovement _entityMovement;
+    private EntityAnimation _entityAnimation;
     private Material _material;
     
     private int _currentHealth;
 
     protected virtual void Start()
     {
+        _entityMovement = GetComponent<EntityMovement>();
+        _entityAnimation = GetComponentInChildren<EntityAnimation>();
         _material = GetComponentInChildren<Renderer>().material;
         
         // Initialize the entity with the maximum health
@@ -71,7 +78,12 @@ public class EntityHealth : MonoBehaviour
     /// </summary>
     protected virtual void Death()
     {
-        Debug.Log("Entity is dead");
+        foreach (var collider2D in _collider2Ds)
+            collider2D.enabled = false;
+        
+        _entityMovement.ResetDirection();
+        _entityMovement.enabled = false;
+        _entityAnimation.Death();
     }
 
     private IEnumerator HitRoutine()
