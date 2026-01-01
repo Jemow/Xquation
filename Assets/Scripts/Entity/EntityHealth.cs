@@ -19,9 +19,6 @@ public class EntityHealth : MonoBehaviour
     [Tooltip("How much time the hit effect will be displayed")]
     [SerializeField] private float _hitEffectDuration = 0.1f;
     
-    private SpriteRenderer _spriteRenderer;
-    private Color _originalColor;
-    
     protected float HealthRatio => (float)_currentHealth / maxHealth;
 
     /// <summary>
@@ -39,12 +36,13 @@ public class EntityHealth : MonoBehaviour
         }
     }
     
+    private Material _material;
+    
     private int _currentHealth;
 
     protected virtual void Start()
     {
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        _originalColor = _spriteRenderer.color;
+        _material = GetComponentInChildren<Renderer>().material;
         
         // Initialize the entity with the maximum health
         CurrentHealth = maxHealth;
@@ -78,9 +76,9 @@ public class EntityHealth : MonoBehaviour
 
     private IEnumerator HitRoutine()
     {
-        _spriteRenderer.color = Color.white;
+        _material.SetFloat("_HitEffectBlend", 1f);
         yield return new WaitForSeconds(_hitEffectDuration);
-        _spriteRenderer.color = _originalColor;
+        _material.SetFloat("_HitEffectBlend", 0f);
     }
     
     public virtual void ResetHealth() => CurrentHealth = maxHealth;
