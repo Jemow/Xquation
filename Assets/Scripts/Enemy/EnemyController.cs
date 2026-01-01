@@ -18,8 +18,25 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        UpdateDirection();
+        UpdateXScale();
+    }
+
+    private void UpdateDirection()
+    {
         Vector2 direction = _playerTransform.position - transform.position;
         direction.Normalize();
         _movement.Direction = direction;
+    }
+
+    private void UpdateXScale()
+    {
+        float vx = _movement.VelocityX;
+
+        if (Mathf.Approximately(vx, 0f)) return;
+
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * Mathf.Sign(vx);
+        transform.localScale = scale;
     }
 }

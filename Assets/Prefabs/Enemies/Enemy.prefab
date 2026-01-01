@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3306874887185355438}
   - component: {fileID: -5276401270915161889}
   - component: {fileID: -3227946235302039130}
+  - component: {fileID: 6764376531251656996}
   - component: {fileID: -5611761951683235191}
   - component: {fileID: 3883081759092779325}
   m_Layer: 6
@@ -81,6 +82,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 5
   _hitEffectDuration: 0.1
+--- !u!114 &6764376531251656996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431818382318890418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df7584543e0c3443a4ebe5fec3dd088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityAnimation
+  animator: {fileID: 4348522432354516570}
 --- !u!50 &-5611761951683235191
 Rigidbody2D:
   serializedVersion: 5
@@ -155,6 +169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8169336093990446314}
   - component: {fileID: 8266734188990230060}
+  - component: {fileID: 4348522432354516570}
   m_Layer: 0
   m_Name: Render
   m_TagString: Untagged
@@ -224,8 +239,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1742809930, guid: 4b780ecfb1b6c9943b12b0789684f17e, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 5830694933855508796, guid: 0e3fb42b23e55f1448013be90133751d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -235,6 +250,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4348522432354516570
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819823023019134993}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a2a2b19be517d5241815450cbc2f9000, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4493201622055215487
 GameObject:
   m_ObjectHideFlags: 0

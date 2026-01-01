@@ -17,6 +17,7 @@ public class EntityMovement : MonoBehaviour
     public Rigidbody2D Rb => _rb;
     
     public float VelocityMagnitude => _rb.linearVelocity.magnitude;
+    public float VelocityX => _rb.linearVelocityX;
     
     private Rigidbody2D _rb;
     
