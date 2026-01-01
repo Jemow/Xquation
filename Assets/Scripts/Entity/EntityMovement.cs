@@ -15,6 +15,8 @@ public class EntityMovement : MonoBehaviour
     
     public Vector2 Direction { get; set; }
     
+    public float VelocityMagnitude => _rb.linearVelocity.magnitude;
+    
     private Rigidbody2D _rb;
     
     private Coroutine _knockBackCoroutine;
