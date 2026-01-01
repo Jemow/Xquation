@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UnityEvent _onRestart;
     [SerializeField] private UnityEvent _onPause;
     [SerializeField] private UnityEvent _onResume;
+    [SerializeField] private UnityEvent _onWin;
     
     [Serializable]
     struct Wave
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     
     public int WaveIndex => _waveIndex;
+    public bool IsPaused => _isPaused;
     public bool Spawning { get; private set; }
     
     public bool IsPlaying { get; private set; }
@@ -74,7 +76,7 @@ public class GameManager : MonoBehaviour
 
         if (_waveIndex >= _waves.Length)
         {
-            Debug.LogWarning("Finish Wave");
+            _onWin?.Invoke();
         }
         else _onWaveEnded?.Invoke();
     }

@@ -96,7 +96,11 @@ public class PlayerController : MonoBehaviour
 
     public void OnPause(InputAction.CallbackContext context)
     {
-        if(context.started) GameManager.Instance.PauseTrigger();
+        GameManager gameManager = GameManager.Instance;
+        
+
+        if (context.started && (gameManager.IsPaused || gameManager.IsPlaying))
+            gameManager.PauseTrigger();
     }
 
     #endregion
