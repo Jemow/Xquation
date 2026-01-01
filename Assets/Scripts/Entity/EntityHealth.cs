@@ -21,14 +21,14 @@ public class EntityHealth : MonoBehaviour
     
     private SpriteRenderer _spriteRenderer;
     private Color _originalColor;
-
-    int _currentHealth;
+    
+    protected float HealthRatio => (float)_currentHealth / maxHealth;
 
     /// <summary>
     /// Gets or sets the current health of the entity.
     /// Health is clamped between 0 and MaxHealth.
     /// </summary>
-    protected int CurrentHealth 
+    private int CurrentHealth 
     { 
         get => _currentHealth;
         set
@@ -38,6 +38,8 @@ public class EntityHealth : MonoBehaviour
             else _currentHealth = value;
         }
     }
+    
+    private int _currentHealth;
 
     protected virtual void Start()
     {

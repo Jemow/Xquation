@@ -1,10 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : EntityHealth
 {
     [Header("Player")]
     [SerializeField] private float invisibleTime = 0.2f;
+    
+    [Header("UI")]
+    [SerializeField] private Slider healthSlider;
     
     private bool _isInvincible;
 
@@ -13,6 +17,7 @@ public class PlayerHealth : EntityHealth
         if(amount < 0 && _isInvincible) return;
         base.ChangeHealth(amount);
         StartCoroutine(Invincibility());
+        healthSlider.value = HealthRatio;
     }
 
     protected override void Death()

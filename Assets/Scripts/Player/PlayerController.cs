@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float energyConsumption = 20f;
     [SerializeField] private float energyRecover = 15f;
     [SerializeField] private float recoverDelay = 1f;
+    
+    [Header("UI")]
+    [SerializeField] private Slider beamSlider;
 
     public static Transform PlayerTransform { get; private set; }
     
@@ -65,6 +69,8 @@ public class PlayerController : MonoBehaviour
                 _currentBeamEnergy = 0;
                 MathLine.IsAttacking = false;
             }
+            
+            UpdateBeamSlider();
         }
         else
         {
@@ -72,9 +78,13 @@ public class PlayerController : MonoBehaviour
             {
                 _currentBeamEnergy += energyRecover * Time.deltaTime;
                 _currentBeamEnergy = Mathf.Min(_currentBeamEnergy, maxBeamEnergy);
+                
+                UpdateBeamSlider();
             }
         }
     }
+    
+    private void UpdateBeamSlider() => beamSlider.value = _currentBeamEnergy / maxBeamEnergy;
 
     #region Inputs
 
