@@ -89,11 +89,15 @@ public class PlayerController : MonoBehaviour
 
     public void OnFuncMode(InputAction.CallbackContext context)
     {
-        if(context.started) _funcProjectile = true;
-        else if(context.canceled) _funcProjectile = false;
+        if(context.started) _funcProjectile = !_funcProjectile;
     }
     
     public void OnMove(InputAction.CallbackContext context) => _movement.Direction = context.ReadValue<Vector2>();
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if(context.started) GameManager.Instance.PauseTrigger();
+    }
 
     #endregion
 

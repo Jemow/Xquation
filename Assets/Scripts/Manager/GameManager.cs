@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UnityEvent _onWaveEnded;
     [SerializeField] private UnityEvent _onGameOver;
     [SerializeField] private UnityEvent _onRestart;
+    [SerializeField] private UnityEvent _onPause;
+    [SerializeField] private UnityEvent _onResume;
     
     [Serializable]
     struct Wave
@@ -26,7 +28,10 @@ public class GameManager : MonoBehaviour
         public float spawnInterval;
     }
 
+    public static GameManager Instance { get; private set; }
+    
     public int WaveIndex => _waveIndex;
+    public bool Spawning { get; private set; }
     
     public bool IsPlaying { get; private set; }
 
@@ -34,10 +39,9 @@ public class GameManager : MonoBehaviour
     
     private int _waveIndex;
     private int _currentSpawnCount;
-    
-    public static GameManager Instance { get; private set; }
-    
-    public bool Spawning { get; private set; }
+
+    private bool _isPaused;
+    private bool _wasPlaying;
 
     private void Awake()
     {
@@ -118,4 +122,36 @@ public class GameManager : MonoBehaviour
         
         _onRestart?.Invoke();
     }
+
+    #region Pause
+
+    public void PauseTrigger()
+    {
+        if(_isPaused) Resume();
+        else Pause();
+        
+        _isPaused = !_isPaused;
+    }
+
+    private void Pause()
+    {
+        _wasPlaying = IsPlaying;
+        
+        IsPlaying = false;
+        
+        Time.timeScale = 0f;
+        
+        _onPause?.Invoke();
+    }
+
+    private void Resume()
+    {
+        IsPlaying = _wasPlaying;
+        
+        Time.timeScale = 1f;
+        
+        _onResume?.Invoke();
+    }
+
+    #endregion
 }
