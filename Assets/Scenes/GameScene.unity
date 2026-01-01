@@ -154,7 +154,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &11734975
 MonoBehaviour:
@@ -441,12 +441,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2061321182}
+  - {fileID: 1649491759}
   - {fileID: 1633750129}
   - {fileID: 420404215}
   - {fileID: 1998864674}
   - {fileID: 1818703204}
   - {fileID: 521175397}
-  - {fileID: 1649491759}
   m_Father: {fileID: 640570908}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1401,7 +1401,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &219483936
 MonoBehaviour:
@@ -1751,7 +1751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SelectButton
   backgroundImage: {fileID: 628854092}
-  selectedColor: {r: 0.4264151, g: 0.39491853, b: 0, a: 1}
+  selectedColor: {r: 0.645283, g: 0.10592378, b: 0.2846072, a: 1}
   defaultColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
   commonImage: {fileID: -7092505812955369041, guid: 706473f224df8f841998f5a4f8bfa159, type: 3}
   rareImage: {fileID: -7092505812955369041, guid: 3e7bcfe040bf9bf40b801d584da22d98, type: 3}
@@ -1988,8 +1988,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: 0}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchoredPosition: {x: -300, y: 0}
+  m_SizeDelta: {x: 250, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &310300997
 MonoBehaviour:
@@ -2842,7 +2842,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -490}
+  m_AnchoredPosition: {x: 0, y: -530}
   m_SizeDelta: {x: 1000, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &420404216
@@ -3102,10 +3102,10 @@ RectTransform:
   - {fileID: 2137009775}
   m_Father: {fileID: 1973295348}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.3701239, y: 1.8268318}
-  m_SizeDelta: {x: 139.2768, y: 140.1903}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -1.3701248, y: 1.826828}
+  m_SizeDelta: {x: -11, y: -9.809692}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &469162418
 MonoBehaviour:
@@ -4506,7 +4506,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00001859665, y: -0.000030517578}
+  m_AnchoredPosition: {x: -1.3701423, y: 1.3700932}
   m_SizeDelta: {x: 139.2768, y: 140.1903}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &628854092
@@ -6469,7 +6469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SelectButton
   backgroundImage: {fileID: 1141776896}
-  selectedColor: {r: 0.4264151, g: 0.39491853, b: 0, a: 1}
+  selectedColor: {r: 0.645283, g: 0.10592378, b: 0.2846072, a: 1}
   defaultColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
   commonImage: {fileID: -7092505812955369041, guid: 706473f224df8f841998f5a4f8bfa159, type: 3}
   rareImage: {fileID: -7092505812955369041, guid: 3e7bcfe040bf9bf40b801d584da22d98, type: 3}
@@ -6549,7 +6549,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1074755042
 MonoBehaviour:
@@ -6715,10 +6715,10 @@ RectTransform:
   - {fileID: 2057554489}
   m_Father: {fileID: 1824058179}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.3701239, y: 1.8268318}
-  m_SizeDelta: {x: 139.2768, y: 140.1903}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -1.3701248, y: 1.826828}
+  m_SizeDelta: {x: -11, y: -9.809692}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1122339963
 MonoBehaviour:
@@ -6869,10 +6869,10 @@ RectTransform:
   - {fileID: 2065170213}
   m_Father: {fileID: 310300996}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.3701239, y: 1.8268318}
-  m_SizeDelta: {x: 139.2768, y: 140.1903}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -1.3701477, y: 1.826828}
+  m_SizeDelta: {x: -11, y: -9.809692}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1126281596
 MonoBehaviour:
@@ -7250,7 +7250,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00001859665, y: -0.000030517578}
+  m_AnchoredPosition: {x: -1.3701423, y: 1.3700932}
   m_SizeDelta: {x: 139.2768, y: 140.1903}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1141776896
@@ -9729,8 +9729,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00001859665, y: -0.000030517578}
-  m_SizeDelta: {x: 139.2768, y: 140.1903}
+  m_AnchoredPosition: {x: -1.3701423, y: 1.3700932}
+  m_SizeDelta: {x: 140.1902, y: 140.1903}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1548928823
 MonoBehaviour:
@@ -9805,7 +9805,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1557664577
 MonoBehaviour:
@@ -10513,7 +10513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SelectButton
   backgroundImage: {fileID: 1883814245}
-  selectedColor: {r: 0.4264151, g: 0.39491853, b: 0, a: 1}
+  selectedColor: {r: 0.645283, g: 0.10592378, b: 0.2846072, a: 1}
   defaultColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
   commonImage: {fileID: -7092505812955369041, guid: 706473f224df8f841998f5a4f8bfa159, type: 3}
   rareImage: {fileID: -7092505812955369041, guid: 3e7bcfe040bf9bf40b801d584da22d98, type: 3}
@@ -10865,8 +10865,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00001859665, y: -0.000030517578}
-  m_SizeDelta: {x: 139.2768, y: 140.1903}
+  m_AnchoredPosition: {x: -1.3701423, y: 1.3700932}
+  m_SizeDelta: {x: 138.3634, y: 139.2769}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1629414856
 MonoBehaviour:
@@ -10943,8 +10943,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -240}
-  m_SizeDelta: {x: 600, y: 200}
+  m_AnchoredPosition: {x: 0, y: -300}
+  m_SizeDelta: {x: 900, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1633750130
 MonoBehaviour:
@@ -11016,9 +11016,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 63848176}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 330}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -155}
   m_SizeDelta: {x: 900, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1649491760
@@ -11718,7 +11718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SelectButton
   backgroundImage: {fileID: 1629414856}
-  selectedColor: {r: 0.4264151, g: 0.39491853, b: 0, a: 1}
+  selectedColor: {r: 0.645283, g: 0.10592378, b: 0.2846072, a: 1}
   defaultColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
   commonImage: {fileID: -7092505812955369041, guid: 706473f224df8f841998f5a4f8bfa159, type: 3}
   rareImage: {fileID: -7092505812955369041, guid: 3e7bcfe040bf9bf40b801d584da22d98, type: 3}
@@ -12279,7 +12279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SelectButton
   backgroundImage: {fileID: 1548928823}
-  selectedColor: {r: 0.4264151, g: 0.39491853, b: 0, a: 1}
+  selectedColor: {r: 0.645283, g: 0.10592378, b: 0.2846072, a: 1}
   defaultColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 1}
   commonImage: {fileID: -7092505812955369041, guid: 706473f224df8f841998f5a4f8bfa159, type: 3}
   rareImage: {fileID: -7092505812955369041, guid: 3e7bcfe040bf9bf40b801d584da22d98, type: 3}
@@ -12363,7 +12363,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1781290243
 MonoBehaviour:
@@ -12759,8 +12759,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: 0}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchoredPosition: {x: 300, y: 0}
+  m_SizeDelta: {x: 250, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1824058180
 MonoBehaviour:
@@ -13167,7 +13167,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00001859665, y: -0.000030517578}
+  m_AnchoredPosition: {x: -1.3701423, y: 1.3700932}
   m_SizeDelta: {x: 139.2768, y: 140.1903}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1883814245
@@ -32804,7 +32804,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 250, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1973295349
 MonoBehaviour:
@@ -33306,7 +33306,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2057554490
 MonoBehaviour:
@@ -33328,7 +33328,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: x
+  m_text: asin(x)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d63449da9d5c0b45a6e75bd21eb87c4, type: 2}
   m_sharedMaterial: {fileID: -2953859635586213192, guid: 3d63449da9d5c0b45a6e75bd21eb87c4, type: 2}
@@ -33355,8 +33355,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -33439,10 +33439,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 63848176}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 520, y: 200}
-  m_SizeDelta: {x: 400, y: 200}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -80}
+  m_SizeDelta: {x: 800, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2061321183
 MonoBehaviour:
@@ -33491,8 +33491,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -33578,7 +33578,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2065170214
 MonoBehaviour:
@@ -33600,7 +33600,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: x
+  m_text: asin(x)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d63449da9d5c0b45a6e75bd21eb87c4, type: 2}
   m_sharedMaterial: {fileID: -2953859635586213192, guid: 3d63449da9d5c0b45a6e75bd21eb87c4, type: 2}
@@ -33627,8 +33627,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -33969,7 +33969,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2137009776
 MonoBehaviour:
@@ -33991,7 +33991,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: x
+  m_text: asin(x)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3d63449da9d5c0b45a6e75bd21eb87c4, type: 2}
   m_sharedMaterial: {fileID: -2953859635586213192, guid: 3d63449da9d5c0b45a6e75bd21eb87c4, type: 2}
@@ -34018,8 +34018,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -62,7 +62,7 @@ public class MathWave : MonoBehaviour
 
     private void UpdateWave()
     {
-        if (_nodes.Count == 0 || !GameManager.Instance.IsPlaying) return;
+        if (_nodes.Count == 0) return;
 
         Vector3 playerPos = transform.position;
         if (Mouse.current == null) return;
