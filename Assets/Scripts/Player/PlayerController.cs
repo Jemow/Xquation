@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
     private float _currentBeamEnergy;
     private float _lastConsumTime;
 
+    #region Init
+
     private void Awake() => PlayerTransform = transform;
 
     private void Start()
@@ -49,8 +51,11 @@ public class PlayerController : MonoBehaviour
         _currentBeamEnergy = maxBeamEnergy;
     }
 
+    #endregion
+
     private void Update()
     {
+        UpdateXScale();
         HandleBeamEnergy();
 
         if(!_isFiring || !_canFire) return;
@@ -58,6 +63,66 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(FireCoroutine());
         Fire();
     }
+
+    #region Inputs
+
+    public void OnPrimaryAttack(InputAction.CallbackContext context)
+    {
+        if(context.started) _isFiring = true;
+        else if(context.canceled) _isFiring = false;
+    }
+
+    public void OnSecondaryAttack(InputAction.CallbackContext context)
+    {
+        if (context.started && _currentBeamEnergy > 0) 
+            MathLine.IsAttacking = true;
+        else if (context.canceled) 
+            MathLine.IsAttacking = false;
+    }
+
+    public void OnFuncMode(InputAction.CallbackContext context)
+    {
+        if(context.started) _funcProjectile = true;
+        else if(context.canceled) _funcProjectile = false;
+    }
+    
+    public void OnMove(InputAction.CallbackContext context) => _movement.Direction = context.ReadValue<Vector2>();
+
+    #endregion
+
+    #region Fire
+
+    private void Fire()
+    {
+        if(MathLine.IsAttacking || !GameManager.Instance.IsPlaying) return;
+        
+        Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
+        Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(mouseScreenPos);
+        mouseWorldPos.z = 0f;
+
+        Vector3 dir = (mouseWorldPos - transform.position).normalized;
+
+        MathProjectile p = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        p.Init(
+            dir, 
+            _mw.GetNodes(), 
+            _mw.GetMinX(), 
+            _mw.GetMathScale(),
+            _mw.GetMaxY(),
+            _mw.NodeCount != 0 && _funcProjectile
+        );
+    }
+
+    private IEnumerator FireCoroutine()
+    {
+        _canFire = false;
+        yield return new WaitForSeconds(fireRate);
+        _canFire = true;
+    }
+
+    #endregion
+
+    #region Beam Energy
 
     private void HandleBeamEnergy()
     {
@@ -90,60 +155,14 @@ public class PlayerController : MonoBehaviour
     
     private void UpdateBeamSlider() => beamSlider.value = _currentBeamEnergy / maxBeamEnergy;
 
-    #region Inputs
-
-    public void OnPrimaryAttack(InputAction.CallbackContext context)
+    public void ResetEnergy()
     {
-        if(context.started) _isFiring = true;
-        else if(context.canceled) _isFiring = false;
+        _currentBeamEnergy = maxBeamEnergy;
+        UpdateBeamSlider();
     }
-
-    public void OnSecondaryAttack(InputAction.CallbackContext context)
-    {
-        if (context.started && _currentBeamEnergy > 0) 
-            MathLine.IsAttacking = true;
-        else if (context.canceled) 
-            MathLine.IsAttacking = false;
-    }
-
-    public void OnFuncMode(InputAction.CallbackContext context)
-    {
-        if(context.started) _funcProjectile = true;
-        else if(context.canceled) _funcProjectile = false;
-    }
-    
-    public void OnMove(InputAction.CallbackContext context) => _movement.Direction = context.ReadValue<Vector2>();
 
     #endregion
-
-    private void Fire()
-    {
-        if(MathLine.IsAttacking || !GameManager.Instance.IsPlaying) return;
-        
-        Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
-        Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(mouseScreenPos);
-        mouseWorldPos.z = 0f;
-
-        Vector3 dir = (mouseWorldPos - transform.position).normalized;
-
-        MathProjectile p = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        p.Init(
-            dir, 
-            _mw.GetNodes(), 
-            _mw.GetMinX(), 
-            _mw.GetMathScale(),
-            _mw.GetMaxY(),
-            _mw.NodeCount != 0 && _funcProjectile
-        );
-    }
-
-    private IEnumerator FireCoroutine()
-    {
-        _canFire = false;
-        yield return new WaitForSeconds(fireRate);
-        _canFire = true;
-    }
-
+    
     private void OnCollisionEnter2D(Collision2D other)
     {
         if(!other.gameObject.CompareTag("Enemy")) return;
@@ -156,12 +175,19 @@ public class PlayerController : MonoBehaviour
             _movement.KnockBack(direction);
         }
     }
-
-    public void ResetEnergy()
-    {
-        _currentBeamEnergy = maxBeamEnergy;
-        UpdateBeamSlider();
-    }
     
     public void Respawn() => transform.position = _playerSpawn;
+
+    private void UpdateXScale()
+    {
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+        
+        Vector3 screenPos = _mainCamera.WorldToScreenPoint(transform.position);
+        
+        float direction = mouseScreenPos.x >= screenPos.x ? 1f : -1f;
+
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x) * direction;
+        transform.localScale = scale;
+    }
 }

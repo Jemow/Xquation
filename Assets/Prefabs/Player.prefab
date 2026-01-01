@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7668655286373466232}
   - component: {fileID: 9091561075058922388}
+  - component: {fileID: 8664313916173319321}
   m_Layer: 0
   m_Name: Render
   m_TagString: Untagged
@@ -90,6 +91,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &8664313916173319321
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136892462799670293}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c9c9897427c374d4b99ac1664d76608c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4041172077427733755
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,6 +224,7 @@ GameObject:
   - component: {fileID: 3281913043029663517}
   - component: {fileID: 3903712307225550713}
   - component: {fileID: 4531684857520744341}
+  - component: {fileID: 1163025265287628714}
   - component: {fileID: 4467519205057976409}
   - component: {fileID: 2396397031985029563}
   - component: {fileID: 42431241674556992}
@@ -281,6 +305,19 @@ MonoBehaviour:
   _knockBackForce: 10
   _knockBackDuration: 0.2
   _knockBackDamping: 5
+--- !u!114 &1163025265287628714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8222976906542073356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07af5ed823dc73f40b65552c67466754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
+  animator: {fileID: 8664313916173319321}
 --- !u!114 &4467519205057976409
 MonoBehaviour:
   m_ObjectHideFlags: 0

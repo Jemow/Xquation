@@ -52,7 +52,7 @@ MonoBehaviour:
   damageTickRate: 0.2
   chaosThreshold: 8
   filter:
-    useTriggers: 0
+    useTriggers: 1
     useLayerMask: 0
     useDepth: 0
     useOutsideDepth: 0

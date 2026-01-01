@@ -3,14 +3,13 @@ using UnityEngine;
 public class EntityAnimation : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Animator _animator;
+    [SerializeField] protected Animator animator;
     
-    private EntityMovement _entityMovement;
+    protected EntityMovement entityMovement;
     
-    private void Start() => _entityMovement = GetComponent<EntityMovement>();
+    private void Start() => entityMovement = GetComponent<EntityMovement>();
 
-    private void Update()
-    {
-        _animator.SetFloat("Speed", _entityMovement.VelocityMagnitude);
-    }
+    private void Update() => MoveAnimation();
+    
+    protected virtual void MoveAnimation() => animator.SetFloat("Speed", entityMovement.VelocityMagnitude);
 }

@@ -14,6 +14,7 @@ public class EntityMovement : MonoBehaviour
     [SerializeField] private float _knockBackDamping = 5f;
     
     public Vector2 Direction { get; set; }
+    public Rigidbody2D Rb => _rb;
     
     public float VelocityMagnitude => _rb.linearVelocity.magnitude;
     
