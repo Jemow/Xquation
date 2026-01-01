@@ -27,12 +27,16 @@ public class PlayerController : MonoBehaviour
     private MathWave _mw;
     private Camera _mainCamera;
 
+    private Vector2 _playerSpawn;
+
     private bool _isFiring;
     private bool _canFire = true;
     private bool _funcProjectile;
     
     private float _currentBeamEnergy;
     private float _lastConsumTime;
+
+    private void Awake() => PlayerTransform = transform;
 
     private void Start()
     {
@@ -41,7 +45,7 @@ public class PlayerController : MonoBehaviour
         _mw = GetComponent<MathWave>();
         _mainCamera = Camera.main;
         
-        PlayerTransform = transform;
+        _playerSpawn = transform.position;
         _currentBeamEnergy = maxBeamEnergy;
     }
 
@@ -158,4 +162,6 @@ public class PlayerController : MonoBehaviour
         _currentBeamEnergy = maxBeamEnergy;
         UpdateBeamSlider();
     }
+    
+    public void Respawn() => transform.position = _playerSpawn;
 }
