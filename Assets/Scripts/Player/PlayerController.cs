@@ -134,8 +134,8 @@ public class PlayerController : MonoBehaviour
 
         Vector3 dir = (mouseWorldPos - projectileSpawn.position).normalized;
 
-        MathProjectile p = Instantiate(projectilePrefab, projectileSpawn.position, Quaternion.identity);
-        p.Init(
+        MathProjectile projectile = ObjectPool.Instance.SpawnFromPool<MathProjectile>("Projectile", projectileSpawn.position, Quaternion.identity);
+        projectile.Init(
             dir, 
             _mw.GetNodes(), 
             _mw.GetMinX(), 

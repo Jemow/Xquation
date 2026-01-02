@@ -45,6 +45,11 @@ public class CameraShakeManager : MonoBehaviour
         ResetShake();
     }
 
+    private void Update()
+    {
+        if(_isShaking && !MathLine.IsAttacking) StopShake();
+    }
+
     public void Shake(float amplitude, float frequency, float duration)
     {
         if(_isShaking) return;

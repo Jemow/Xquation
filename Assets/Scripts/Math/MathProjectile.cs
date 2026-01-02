@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.Serialization;
 
 public class MathProjectile : MonoBehaviour
 {
@@ -31,6 +30,12 @@ public class MathProjectile : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
     private TrailRenderer _trailRenderer;
+    
+    private Material _originalMaterial;
+    private Color _originalColor;
+    private Material _originalTrailMaterial;
+    private Gradient _originalTrailGradient;
+
     private Vector3 _startPosition;
     private Vector3 _direction;
     private Vector3 _perpendicularDir;
@@ -39,6 +44,7 @@ public class MathProjectile : MonoBehaviour
     private float _distanceTraveled;
     private float _mathMinX;
     private float _mathScale;
+    private float _currentLifeTime;
     
     private bool _followFunction;
     
@@ -46,33 +52,73 @@ public class MathProjectile : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _trailRenderer = GetComponent<TrailRenderer>();
+
+        if (_spriteRenderer)
+        {
+            _originalMaterial = _spriteRenderer.sharedMaterial;
+            _originalColor = _spriteRenderer.color;
+        }
+
+        if (_trailRenderer)
+        {
+            _originalTrailMaterial = _trailRenderer.sharedMaterial;
+            _originalTrailGradient = _trailRenderer.colorGradient;
+        }
     }
     
     public void Init(Vector3 direction, List<MathNode> nodes, float minX, float scale, float limitY, bool followFunction)
     {
+        _distanceTraveled = 0f;
+        _currentLifeTime = lifeTime;
+        _startPosition = transform.position; 
+        
+        if (_trailRenderer) _trailRenderer.Clear();
+
         _direction = direction.normalized;
         _perpendicularDir = new Vector3(-_direction.y, _direction.x, 0f);
-        _startPosition = transform.position;
+        
         _nodes = new List<MathNode>(nodes);
         _mathMinX = minX;
         _mathScale = scale;
         _followFunction = followFunction;
         
-        // On applique la limite du Wave au projectile
         maxMathY = limitY;
 
         if (_followFunction)
         {
-            _spriteRenderer.material = funcProjectileMaterial;
-            _spriteRenderer.color = funcColor;
-            _trailRenderer.material = funcProjectileMaterial;
-            Gradient gradient = new Gradient();
-            gradient.SetKeys(
-                new[] { new GradientColorKey(funcColor, 0.0f), new GradientColorKey(funcColor, 1.0f) },
-                new [] { new GradientAlphaKey(funcColor.a, 0.0f), new GradientAlphaKey(funcColor.a, 1.0f) }
-            );
-            _trailRenderer.colorGradient = gradient;
+            if (_spriteRenderer)
+            {
+                _spriteRenderer.material = funcProjectileMaterial;
+                _spriteRenderer.color = funcColor;
+            }
+
+            if (_trailRenderer)
+            {
+                _trailRenderer.material = funcProjectileMaterial;
+                Gradient gradient = new Gradient();
+                gradient.SetKeys(
+                    new[] { new GradientColorKey(funcColor, 0.0f), new GradientColorKey(funcColor, 1.0f) },
+                    new [] { new GradientAlphaKey(funcColor.a, 0.0f), new GradientAlphaKey(funcColor.a, 1.0f) }
+                );
+                _trailRenderer.colorGradient = gradient;
+            }
         }
+        else
+        {
+            if (_spriteRenderer)
+            {
+                _spriteRenderer.material = _originalMaterial;
+                _spriteRenderer.color = _originalColor;
+            }
+
+            if (_trailRenderer)
+            {
+                _trailRenderer.material = _originalTrailMaterial;
+                _trailRenderer.colorGradient = _originalTrailGradient;
+            }
+        }
+        
+        transform.right = _direction;
     }
 
     private void Update()
@@ -105,16 +151,12 @@ public class MathProjectile : MonoBehaviour
         Vector3 nextPos = _startPosition + (_direction * nextDistance) + (_perpendicularDir * mathY);
 
         float stepDistance = Vector3.Distance(currentPos, nextPos);
-
-        // CORRECTION ICI : On bouge D'ABORD, on check APRES
-        // Cela permet au TrailRenderer de dessiner le trait moche du saut, 
-        // puis on le Clear() immédiatement après dans le 'else if'.
+        
         transform.position = nextPos;
         _distanceTraveled = nextDistance;
 
         if (stepDistance > projectileRadius && stepDistance <= maxJumpDistance)
         {
-            // Note: Linecast utilise currentPos (sauvegardé au début) et nextPos, donc c'est safe
             RaycastHit2D hit = Physics2D.Linecast(currentPos, nextPos, hitLayers);
             
             if (hit.collider && hit.collider.CompareTag(targetTag))
@@ -125,8 +167,8 @@ public class MathProjectile : MonoBehaviour
             _trailRenderer.Clear();
         }
 
-        lifeTime -= Time.deltaTime;
-        if (lifeTime <= 0f) Destroy(gameObject);
+        _currentLifeTime -= Time.deltaTime;
+        if (_currentLifeTime <= 0f) gameObject.SetActive(false);
     }
 
     private void ApplyDamage(Collider2D other)
@@ -134,7 +176,7 @@ public class MathProjectile : MonoBehaviour
         if (other.TryGetComponent(out EntityHealth entityHealth))
         {
             entityHealth.ChangeHealth(-(_followFunction ? funcDamage : damage));
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 

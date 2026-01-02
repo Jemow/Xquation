@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq; // Important pour le filtrage
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,7 +21,7 @@ public class NodeSelectionUI : MonoBehaviour
     [Header("Data")]
     [SerializeField] private NodeData[] nodes;
 
-    [Header("Rarity Weights")]
+    [Header("Rarity Weights")] // Total should ideally be 100
     [SerializeField] private int commonWeight = 60;
     [SerializeField] private int rareWeight = 30;
     [SerializeField] private int epicWeight = 10;
@@ -48,7 +49,6 @@ public class NodeSelectionUI : MonoBehaviour
     private void Start()
     {
         InitOperationButtons();
-        // Initialisation visuelle si c'est null
         if (_formulaPlaceholderTmp) _formulaPlaceholderTmp.text = "y = ?";
     }
 
@@ -88,7 +88,8 @@ public class NodeSelectionUI : MonoBehaviour
         {
             if (availableNodes.Count == 0) break;
             
-            NodeData pickedData = PickWeightedNode(availableNodes);
+            // CHANGEMENT ICI : On pick d'abord la rareté, puis le node
+            NodeData pickedData = PickNodeByRarityTier(availableNodes);
             availableNodes.Remove(pickedData);
 
             SelectButton selectButton = nodeButtons[i];
@@ -118,38 +119,29 @@ public class NodeSelectionUI : MonoBehaviour
         UpdateFormulaPlaceholder();
     }
 
-    private NodeData PickWeightedNode(List<NodeData> pool)
+    // Nouvelle méthode de sélection
+    private NodeData PickNodeByRarityTier(List<NodeData> pool)
     {
-        int totalWeight = 0;
-        foreach (var node in pool)
-        {
-            totalWeight += GetRarityWeight(node.rarity);
-        }
-
+        int totalWeight = commonWeight + rareWeight + epicWeight;
         int randomValue = UnityEngine.Random.Range(0, totalWeight);
-        int currentWeight = 0;
+        
+        Rarity targetRarity;
 
-        foreach (var node in pool)
+        if (randomValue < commonWeight) targetRarity = Rarity.Common;
+        else if (randomValue < commonWeight + rareWeight) targetRarity = Rarity.Rare;
+        else targetRarity = Rarity.Epic;
+
+        // On cherche les nodes de cette rareté dans la pool actuelle
+        List<NodeData> filteredList = pool.Where(n => n.rarity == targetRarity).ToList();
+
+        // Si on a trouvé des nodes de cette rareté, on en prend un au pif
+        if (filteredList.Count > 0)
         {
-            currentWeight += GetRarityWeight(node.rarity);
-            if (randomValue < currentWeight)
-            {
-                return node;
-            }
+            return filteredList[UnityEngine.Random.Range(0, filteredList.Count)];
         }
-
-        return pool[0];
-    }
-
-    private int GetRarityWeight(Rarity rarity)
-    {
-        switch (rarity)
-        {
-            case Rarity.Common: return commonWeight;
-            case Rarity.Rare: return rareWeight;
-            case Rarity.Epic: return epicWeight;
-            default: return commonWeight;
-        }
+        
+        // Fallback : Si aucun node de la rareté cible n'est dispo (ex: plus de légendaires), on prend au hasard dans ce qu'il reste
+        return pool[UnityEngine.Random.Range(0, pool.Count)];
     }
 
     private void OnNodeSelected(SelectButton clickedButton, NodeData data, float constantValue)
@@ -170,7 +162,6 @@ public class NodeSelectionUI : MonoBehaviour
     {
         if (_selectedNodeData == null) return;
 
-        // Utilise la ref 'mathWave' ou '_mathWave' selon ton setup, j'utilise mathWave ici comme dans ton snippet
         if (mathWave != null)
         {
             switch (_selectedNodeData.nodeType)
