@@ -92,6 +92,12 @@ public class EntityHealth : MonoBehaviour
         yield return new WaitForSeconds(_hitEffectDuration);
         _material.SetFloat("_HitEffectBlend", 0f);
     }
-    
-    public virtual void ResetHealth() => CurrentHealth = maxHealth;
+
+    public virtual void ResetHealth()
+    {
+        CurrentHealth = maxHealth;
+        
+        foreach (var collider2D in _collider2Ds)
+            collider2D.enabled = true;
+    }
 }
