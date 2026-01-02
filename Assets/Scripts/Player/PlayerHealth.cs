@@ -34,4 +34,10 @@ public class PlayerHealth : EntityHealth
     }
     
     private void UpdateHeathSlider() => healthSlider.value = HealthRatio;
+
+    protected override void Death()
+    {
+        base.Death();
+        MathLine.IsAttacking = false;
+    }
 }
