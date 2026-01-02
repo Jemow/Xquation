@@ -20,6 +20,9 @@ public class MathLine : MonoBehaviour
     [SerializeField] private Gradient normalColor;
     [SerializeField] private Gradient attackColor;
     [SerializeField] private Gradient chaosColor;
+    
+    [Header("Sounds")]
+    [SerializeField] private AudioClip impactClip;
 
     public static bool IsAttacking;
 
@@ -81,6 +84,7 @@ public class MathLine : MonoBehaviour
             {
                 health.ChangeHealth(-damagePerTick);
                 _nextDamageTime[id] = Time.time + damageTickRate;
+                SFXManager.Instance.PlaySFX(impactClip, other.transform.position);
             }
         }
     }

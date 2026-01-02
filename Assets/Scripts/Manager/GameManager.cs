@@ -144,6 +144,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         
         _onPause?.Invoke();
+        MathLine.IsAttacking = false;
+        SFXManager.Instance.StopBeamSFX();
     }
 
     private void Resume()

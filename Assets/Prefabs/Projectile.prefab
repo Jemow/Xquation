@@ -66,6 +66,7 @@ MonoBehaviour:
   cameraShakeDuration: 0.2
   funcProjectileMaterial: {fileID: 2100000, guid: f5e945213b44d024fae201b5374b85ce, type: 2}
   funcColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  projectileHitClip: {fileID: 8300000, guid: 2bba03f0b15962349bdd2689e8bc0952, type: 3}
 --- !u!58 &9090096610258085654
 CircleCollider2D:
   m_ObjectHideFlags: 0

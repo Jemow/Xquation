@@ -155,6 +155,7 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
+  impactClip: {fileID: 8300000, guid: 2bba03f0b15962349bdd2689e8bc0952, type: 3}
 --- !u!120 &8103078156664768975
 LineRenderer:
   serializedVersion: 2

@@ -22,6 +22,12 @@ public class PlayerController : MonoBehaviour
     
     [Header("UI")]
     [SerializeField] private Slider beamSlider;
+    
+    [Header("Sounds")]
+    [SerializeField] private AudioClip fireSound;
+    [SerializeField] private AudioClip beamSound;
+    [SerializeField] private AudioClip hurtSound;
+    [SerializeField] private float fireSoundVolume = 0.5f;
 
     public static Transform PlayerTransform { get; private set; }
     
@@ -93,6 +99,15 @@ public class PlayerController : MonoBehaviour
             
             MathLine.IsAttacking = true;
             CameraShakeManager.Instance.StartShake(beamShakeAmplitude, beamShakeFrequency);
+            SFXManager.Instance.PlayBeamSFX(beamSound);
+            
+            Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
+            Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(mouseScreenPos);
+            mouseWorldPos.z = 0f;
+
+            Vector2 knockBackDir = ((Vector2)transform.position - (Vector2)mouseWorldPos).normalized;
+
+            _movement.KnockBack(knockBackDir);
         }
         else if (context.canceled)
         {
@@ -101,6 +116,7 @@ public class PlayerController : MonoBehaviour
             
             MathLine.IsAttacking = false;
             CameraShakeManager.Instance.StopShake();
+            SFXManager.Instance.StopBeamSFX();
         }
     }
 
@@ -147,6 +163,8 @@ public class PlayerController : MonoBehaviour
             _mw.GetMaxY(),
             _mw.NodeCount != 0 && _funcProjectile
         );
+        
+        SFXManager.Instance.PlaySFX(fireSound, _mw.transform.position, fireSoundVolume);
     }
 
     private IEnumerator FireCoroutine()
@@ -173,6 +191,7 @@ public class PlayerController : MonoBehaviour
             {
                 _currentBeamEnergy = 0;
                 MathLine.IsAttacking = false;
+                SFXManager.Instance.StopBeamSFX();
             }
             
             UpdateBeamSlider();
@@ -209,6 +228,7 @@ public class PlayerController : MonoBehaviour
             Vector2 direction = (transform.position - other.transform.position);
             direction.Normalize();
             _movement.KnockBack(direction);
+            SFXManager.Instance.PlaySFX(hurtSound, transform.position);
         }
     }
 

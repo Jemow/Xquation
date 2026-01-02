@@ -27,6 +27,9 @@ public class MathProjectile : MonoBehaviour
     [Header("Visual")]
     [SerializeField] private Material funcProjectileMaterial;
     [SerializeField] private Color funcColor = Color.yellow;
+    
+    [Header("Sounds")]
+    [SerializeField] AudioClip projectileHitClip;
 
     private SpriteRenderer _spriteRenderer;
     private TrailRenderer _trailRenderer;
@@ -176,6 +179,7 @@ public class MathProjectile : MonoBehaviour
         if (other.TryGetComponent(out EntityHealth entityHealth))
         {
             entityHealth.ChangeHealth(-(_followFunction ? funcDamage : damage));
+            SFXManager.Instance.PlaySFX(projectileHitClip, transform.position);
             gameObject.SetActive(false);
         }
     }
