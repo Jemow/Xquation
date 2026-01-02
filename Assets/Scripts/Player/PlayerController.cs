@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     
     private PlayerHealth _playerHealth;
     private EntityMovement _movement;
+    private PlayerAnimation _playerAnimation;
     private MathWave _mw;
     private Camera _mainCamera;
 
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerHealth = GetComponent<PlayerHealth>();
         _movement = GetComponent<EntityMovement>();
+        _playerAnimation = GetComponentInChildren<PlayerAnimation>();
         _mw = GetComponentInChildren<MathWave>();
         _mainCamera = Camera.main;
         
@@ -130,7 +132,7 @@ public class PlayerController : MonoBehaviour
         Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(mouseScreenPos);
         mouseWorldPos.z = 0f;
 
-        Vector3 dir = (mouseWorldPos - transform.position).normalized;
+        Vector3 dir = (mouseWorldPos - projectileSpawn.position).normalized;
 
         MathProjectile p = Instantiate(projectilePrefab, projectileSpawn.position, Quaternion.identity);
         p.Init(
@@ -205,8 +207,13 @@ public class PlayerController : MonoBehaviour
             _movement.KnockBack(direction);
         }
     }
-    
-    public void Respawn() => transform.position = _playerSpawn;
+
+    public void Respawn()
+    {
+        transform.position = _playerSpawn;
+        
+        _playerAnimation.Restart();
+    }
 
     private void UpdateXScale()
     {

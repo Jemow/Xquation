@@ -506,8 +506,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NodeSelectionUI
   mathWave: {fileID: 2917670434737168541}
   nodes:
-  - {fileID: 11400000, guid: 917f18217a8eb334c8831d60b6e889ee, type: 2}
+  - {fileID: 11400000, guid: 12821bbe1a7a8244ea21417e0b997054, type: 2}
+  - {fileID: 11400000, guid: 96c3ec7282c7465408185a95c41c6c7f, type: 2}
   - {fileID: 11400000, guid: d16a70d693a674c4890f2bf87abdd3b1, type: 2}
+  - {fileID: 11400000, guid: af00b556e23d86440b6843246bd8eea8, type: 2}
+  - {fileID: 11400000, guid: 917f18217a8eb334c8831d60b6e889ee, type: 2}
+  - {fileID: 11400000, guid: 550e7bb8c81fc914dbeca7c3f2aca210, type: 2}
+  - {fileID: 11400000, guid: f09f3aa754d113e48a1bf1e4b7f9e710, type: 2}
+  - {fileID: 11400000, guid: 667fc7f34347c814097bccab6d0f90f9, type: 2}
+  - {fileID: 11400000, guid: 45ff2951748d8a14da530b27f166d332, type: 2}
+  - {fileID: 11400000, guid: a1060f5c73d6ec040a86b1107b278d23, type: 2}
   - {fileID: 11400000, guid: 842ac9268a6dc8d40b60e005f2b78646, type: 2}
   - {fileID: 11400000, guid: 28ff0917ef3080e4a91d948b9e05b06c, type: 2}
   - {fileID: 11400000, guid: 3eba6bf2c10769d4c809d4607c10a7a0, type: 2}
@@ -8420,6 +8428,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1238816609}
+        m_TargetAssemblyTypeName: EntityMovement, Assembly-CSharp
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   _onPause:
     m_PersistentCalls:
       m_Calls:
@@ -8457,6 +8477,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1238816609}
+        m_TargetAssemblyTypeName: EntityMovement, Assembly-CSharp
+        m_MethodName: ResetDirection
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

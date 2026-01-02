@@ -1,6 +1,20 @@
 using UnityEngine;
 
-public enum NodeType { X, Sin, Tan, Asin, Constant, T }
+public enum NodeType { X,
+    Sin, 
+    Tan,
+    Asin,
+    Constant,
+    T,
+    Reciprocal,
+    Cos,
+    Acos,
+    Log,
+    Abs,
+    Sign,
+    Atan,
+    Round
+}
 public enum Rarity { Common, Rare, Epic }
 
 [CreateAssetMenu(fileName = "NodeData", menuName = "Scriptable Objects/NodeData")]

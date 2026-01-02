@@ -181,6 +181,14 @@ public class NodeSelectionUI : MonoBehaviour
                 case NodeType.Asin: mathWave.AddNode(new NodeAsin(_selectedOp)); break;
                 case NodeType.T: mathWave.AddNode(new NodeT(_selectedOp, mathWave)); break;
                 case NodeType.Constant: mathWave.AddNode(new NodeConstant(_selectedConstantValue, _selectedOp)); break;
+                case NodeType.Reciprocal: mathWave.AddNode(new NodeReciprocal(_selectedOp)); break;
+                case NodeType.Cos: mathWave.AddNode(new NodeCos(_selectedOp)); break;
+                case NodeType.Acos: mathWave.AddNode(new NodeAcos(_selectedOp)); break;
+                case NodeType.Log: mathWave.AddNode(new NodeLog(_selectedOp)); break;
+                case NodeType.Abs: mathWave.AddNode(new NodeAbs(_selectedOp)); break;
+                case NodeType.Sign: mathWave.AddNode(new NodeSign(_selectedOp)); break;
+                case NodeType.Atan: mathWave.AddNode(new NodeAtan(_selectedOp)); break;
+                case NodeType.Round: mathWave.AddNode(new NodeRound(_selectedOp)); break;
             }
         }
         
@@ -208,7 +216,6 @@ public class NodeSelectionUI : MonoBehaviour
 
         MathNode tempNode = null;
         
-        // Création du node temporaire pour la preview
         switch (_selectedNodeData.nodeType)
         {
             case NodeType.X: tempNode = new NodeX(_selectedOp); break;
@@ -217,6 +224,14 @@ public class NodeSelectionUI : MonoBehaviour
             case NodeType.Asin: tempNode = new NodeAsin(_selectedOp); break;
             case NodeType.T: tempNode = new NodeT(_selectedOp, mathWave); break;
             case NodeType.Constant: tempNode = new NodeConstant(_selectedConstantValue, _selectedOp); break;
+            case NodeType.Reciprocal: tempNode = new NodeReciprocal(_selectedOp); break;
+            case NodeType.Cos: tempNode = new NodeCos(_selectedOp); break;
+            case NodeType.Acos: tempNode = new NodeAcos(_selectedOp); break;
+            case NodeType.Log: tempNode = new NodeLog(_selectedOp); break;
+            case NodeType.Abs: tempNode = new NodeAbs(_selectedOp); break;
+            case NodeType.Sign: tempNode = new NodeSign(_selectedOp); break;
+            case NodeType.Atan: tempNode = new NodeAtan(_selectedOp); break;
+            case NodeType.Round: tempNode = new NodeRound(_selectedOp); break;
         }
 
         if (tempNode != null && _formulaPlaceholderTmp)
