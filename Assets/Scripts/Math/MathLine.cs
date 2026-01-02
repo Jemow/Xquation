@@ -84,7 +84,7 @@ public class MathLine : MonoBehaviour
             {
                 health.ChangeHealth(-damagePerTick);
                 _nextDamageTime[id] = Time.time + damageTickRate;
-                SFXManager.Instance.PlaySFX(impactClip, other.transform.position);
+                //SFXManager.Instance.PlaySFX(impactClip, other.transform.position);
             }
         }
     }
