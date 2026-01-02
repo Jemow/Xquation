@@ -28,7 +28,6 @@ public class MathLine : MonoBehaviour
 
     private Material _defaultMaterial;
     private bool _wasAttacking;
-    
     private bool _isChaotic;
 
     private readonly Dictionary<int, float> _nextDamageTime = new();
@@ -42,23 +41,43 @@ public class MathLine : MonoBehaviour
         
         if (Line)
         {
-            _defaultMaterial = Line.sharedMaterial;
+            // Sécurité : On s'assure de capturer le vrai matériel de base, 
+            // pas celui qui serait resté collé dans l'éditeur par erreur.
+            _defaultMaterial = new Material(Line.sharedMaterial); 
             Line.colorGradient = normalColor;
         }
     }
 
     private void OnEnable()
     {
-        _wasAttacking = !IsAttacking;
+        // Force l'état visuel correct dès l'apparition
+        _wasAttacking = !IsAttacking; 
+        _isChaotic = false; // Reset du chaos à l'activation
         UpdateVisuals(true);
+    }
+
+    private void OnDisable()
+    {
+        _nextDamageTime.Clear();
+        
+        // IMPORTANT : Reset visuel quand on désactive l'objet
+        // pour qu'il ne "glitch" pas quand on le réutilise plus tard
+        if (Line && _defaultMaterial)
+        {
+            Line.sharedMaterial = _defaultMaterial;
+            Line.colorGradient = normalColor;
+        }
     }
 
     private void Update()
     {
+        // Détection du changement d'état (Attaque <-> Repos)
         if (_wasAttacking != IsAttacking)
         {
             _wasAttacking = IsAttacking;
-            _isChaotic = false; 
+            
+            if (!IsAttacking) _isChaotic = false; // On coupe le chaos si on arrête d'attaquer
+            
             UpdateVisuals(true);
         }
 
@@ -68,8 +87,8 @@ public class MathLine : MonoBehaviour
 
         if (!Collider) return;
 
+        // Logique de dégâts
         int count = Collider.Overlap(filter, _results);
-
         for (int i = 0; i < count; i++)
         {
             Collider2D other = _results[i];
@@ -103,15 +122,21 @@ public class MathLine : MonoBehaviour
         }
         else
         {
-            if (_isChaotic && (Line.sharedMaterial != _chaosMaterial || forceUpdate))
+            if (_isChaotic)
             {
-                Line.sharedMaterial = _chaosMaterial;
-                Line.colorGradient = chaosColor;
+                if (Line.sharedMaterial != _chaosMaterial || forceUpdate)
+                {
+                    Line.sharedMaterial = _chaosMaterial;
+                    Line.colorGradient = chaosColor;
+                }
             }
-            else if (Line.sharedMaterial != _attackMaterial || forceUpdate)
+            else
             {
+                if (Line.sharedMaterial != _attackMaterial || forceUpdate)
+                {
                     Line.sharedMaterial = _attackMaterial;
                     Line.colorGradient = attackColor;
+                }
             }
         }
     }
@@ -142,10 +167,5 @@ public class MathLine : MonoBehaviour
             _isChaotic = currentlyChaotic;
             UpdateVisuals();
         }
-    }
-
-    private void OnDisable()
-    {
-        _nextDamageTime.Clear();
     }
 }
