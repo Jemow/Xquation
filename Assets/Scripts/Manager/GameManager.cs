@@ -123,6 +123,8 @@ public class GameManager : MonoBehaviour
         StartWave();
         
         _onRestart?.Invoke();
+        
+        CameraShakeManager.Instance.StopShake();
     }
 
     #region Pause
