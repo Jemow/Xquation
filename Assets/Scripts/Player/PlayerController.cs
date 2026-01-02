@@ -237,6 +237,8 @@ public class PlayerController : MonoBehaviour
         transform.position = _playerSpawn;
         
         _playerAnimation.Restart();
+        
+        SFXManager.Instance.StopBeamSFX();
     }
 
     private void UpdateXScale()

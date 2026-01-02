@@ -40,5 +40,6 @@ public class PlayerHealth : EntityHealth
         base.Death();
         MathLine.IsAttacking = false;
         SFXManager.Instance.StopBeamSFX();
+        CameraShakeManager.Instance.StopShake();
     }
 }

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NodeData
   nodeName: log(x)
   nodeType: 9
-  rarity: 2
+  rarity: 1
   canCompose: 1
