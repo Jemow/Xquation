@@ -8202,6 +8202,48 @@ MonoBehaviour:
     - {fileID: 3306874887185355438, guid: ee1ce9d94bff91f49a6cb45f1c849beb, type: 3}
     enemyNumber: 50
     spawnInterval: 0.2
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cc8f189f4a9f68c409344e681b9379cd, type: 3}
+    - {fileID: 3306874887185355438, guid: cb1881f0acf21ca4ca8da8b75133b1cb, type: 3}
+    - {fileID: 3306874887185355438, guid: ee1ce9d94bff91f49a6cb45f1c849beb, type: 3}
+    enemyNumber: 70
+    spawnInterval: 0.2
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cb1881f0acf21ca4ca8da8b75133b1cb, type: 3}
+    - {fileID: 3306874887185355438, guid: ee1ce9d94bff91f49a6cb45f1c849beb, type: 3}
+    - {fileID: 3306874887185355438, guid: e49ac5acada616d40b6852e5286748ed, type: 3}
+    enemyNumber: 70
+    spawnInterval: 0.2
+  - enemies:
+    - {fileID: 3306874887185355438, guid: e49ac5acada616d40b6852e5286748ed, type: 3}
+    enemyNumber: 50
+    spawnInterval: 0.15
+  - enemies:
+    - {fileID: 3306874887185355438, guid: e49ac5acada616d40b6852e5286748ed, type: 3}
+    - {fileID: 3306874887185355438, guid: e86b1d37f2b29264eb95d1cd5f056942, type: 3}
+    enemyNumber: 80
+    spawnInterval: 0.15
+  - enemies:
+    - {fileID: 3306874887185355438, guid: e49ac5acada616d40b6852e5286748ed, type: 3}
+    - {fileID: 3306874887185355438, guid: e86b1d37f2b29264eb95d1cd5f056942, type: 3}
+    enemyNumber: 100
+    spawnInterval: 0.15
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cdb2be69173884048aac68409078e7a2, type: 3}
+    enemyNumber: 50
+    spawnInterval: 0.1
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cdb2be69173884048aac68409078e7a2, type: 3}
+    - {fileID: 3306874887185355438, guid: e86b1d37f2b29264eb95d1cd5f056942, type: 3}
+    - {fileID: 3306874887185355438, guid: e49ac5acada616d40b6852e5286748ed, type: 3}
+    enemyNumber: 100
+    spawnInterval: 0.1
+  - enemies:
+    - {fileID: 3306874887185355438, guid: cdb2be69173884048aac68409078e7a2, type: 3}
+    - {fileID: 3306874887185355438, guid: e86b1d37f2b29264eb95d1cd5f056942, type: 3}
+    - {fileID: 3306874887185355438, guid: e49ac5acada616d40b6852e5286748ed, type: 3}
+    enemyNumber: 200
+    spawnInterval: 0.05
   _onWaveStarted:
     m_PersistentCalls:
       m_Calls:
