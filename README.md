@@ -23,18 +23,18 @@ Between waves, players interact with the **Function Lab**, where they modify the
 
 ## Controls
 
-* Move — WASD / Arrow Keys
-* Fire Projectile — Left Mouse Button (LMB)
-* Laser Beam — Right Mouse Button (RMB)
-* Switch Projectile Type — F
+* Move - WASD / Arrow Keys
+* Fire Projectile - Left Mouse Button (LMB)
+* Laser Beam - Right Mouse Button (RMB)
+* Switch Projectile Type - F
 
 ## Credits
 
-* Art — [toosday](https://toosday.itch.io/), [craftpix.net](https://craftpix.net/)
-* UI — [SunGraphica](https://sungraphica.itch.io/)
-* Music — [doranarasi](https://doranarasi.com/)
-* Sound Effects — [Shapeforms Audio](https://www.shapeforms.com/)
-* Fonts — [GGBotNet](https://www.ggbot.net/)
+* Art - [toosday](https://toosday.itch.io/), [craftpix.net](https://craftpix.net/)
+* UI - [SunGraphica](https://sungraphica.itch.io/)
+* Music - [doranarasi](https://doranarasi.com/)
+* Sound Effects - [Shapeforms Audio](https://www.shapeforms.com/)
+* Fonts - [GGBotNet](https://www.ggbot.net/)
 
 ## License
 
