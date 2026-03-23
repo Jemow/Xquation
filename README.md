@@ -8,6 +8,8 @@ Players fight waves of enemies using standard projectiles and a unique laser bea
 
 Between waves, players interact with the **Function Lab**, where they modify their current function using arithmetic operations and compositions. This allows for emergent gameplay and experimentation, especially with the addition of a time-based variable that introduces chaotic motion.
 
+[Play on itch.io](https://jemow.itch.io/xquation)
+
 ## Features
 
 * Fast-paced top-down arena shooter gameplay
