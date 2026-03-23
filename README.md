@@ -10,6 +10,9 @@ Between waves, players interact with the **Function Lab**, where they modify the
 
 [Play on itch.io](https://jemow.itch.io/xquation)
 
+## Dependencies                                                                                                                                                                                                                                                                                                                           
+- [AllIn1Shader](https://assetstore.unity.com/packages/vfx/shaders/all-in-1-sprite-shader-156513) (Unity Asset Store)
+
 ## Features
 
 * Top-down arena shooter gameplay
