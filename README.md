@@ -12,7 +12,7 @@ Between waves, players interact with the **Function Lab**, where they modify the
 
 ## Features
 
-* Fast-paced top-down arena shooter gameplay
+* Top-down arena shooter gameplay
 * Dynamic function-based laser system
 * Function Lab to build and modify equations during runs
 * Roguelike progression with increasing difficulty waves
