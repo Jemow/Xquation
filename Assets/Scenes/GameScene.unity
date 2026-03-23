@@ -4596,8 +4596,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 20
     m_Right: 20
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 10
+    m_Bottom: 10
   m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
@@ -36448,6 +36448,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 6a3240d4726354b40a8d46e8da23b012, type: 2}
+    - target: {fileID: 1887998529410976243, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
+      propertyPath: numPoints
+      value: 250
+      objectReference: {fileID: 0}
     - target: {fileID: 1887998529410976243, guid: 6c88f3d528acd684fb9f97da2d38e256, type: 3}
       propertyPath: functionText
       value: 
